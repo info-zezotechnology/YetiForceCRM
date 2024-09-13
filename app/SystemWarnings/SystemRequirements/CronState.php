@@ -5,7 +5,7 @@
  * @package App
  *
  * @copyright YetiForce S.A.
- * @license   YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license   YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  * @author    Sławomir Kłos <s.klos@yetiforce.com>
  * @author    Mariusz Krzaczkowski <m.krzaczkowski@yetiforce.com>
  * @author    Radosław Skrzypczak <r.skrzypczak@yetiforce.com>
@@ -51,7 +51,7 @@ class CronState extends \App\SystemWarnings\Template
 				$this->link = 'index.php?module=CronTasks&parent=Settings&view=List';
 				$this->linkTitle = \App\Language::translate('LBL_CRON_TASKS_LIST', 'Settings:SystemWarnings');
 			} elseif ($checkTasks) {
-				$this->link = 'https://yetiforce.com/en/knowledge-base/documentation/administrator-documentation/item/enable-cron';
+				$this->link = 'https://doc.yetiforce.com/administrator-guides/automation/cron/';
 				$this->linkTitle = \App\Language::translate('LBL_HOW_TO_ENABLE_CRON', 'Settings:SystemWarnings');
 			}
 			$this->description = \App\Language::translate($checkTasks ? 'LBL_CRON_DISABLED_DESC' : 'LBL_CRON_TASK_FAILED_DESC', 'Settings:SystemWarnings') . '<br />';

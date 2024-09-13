@@ -4,7 +4,7 @@
  * Settings QuickCreateEditor index view class.
  *
  * @copyright YetiForce S.A.
- * @license   YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license   YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  * @author    Radosław Skrzypczak <r.skrzypczak@yetiforce.com>
  * @author    Adrian Kon <a.kon@yetiforce.com>
  */
@@ -52,7 +52,7 @@ class Settings_QuickCreateEditor_Index_View extends Settings_Vtiger_Index_View
 		$viewer = $this->getViewer($request);
 		$layout = $recordModel->getModule()->getLayoutTypeForQuickCreate();
 		if ('blocks' === $layout) {
-			$selectedModuleModel = Settings_LayoutEditor_Module_Model::getInstanceByName($sourceModule);
+			$selectedModuleModel = Settings_LayoutEditor_Module_Model::getInstance('Settings:LayoutEditor')->setSourceModule($sourceModule);
 			$blockModels = $selectedModuleModel->getBlocks();
 			$blockIdFieldMap = [];
 			foreach ($quickCreateFields as $fieldModel) {

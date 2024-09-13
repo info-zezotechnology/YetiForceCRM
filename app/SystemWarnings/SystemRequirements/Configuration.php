@@ -6,7 +6,7 @@
  * @package App
  *
  * @copyright YetiForce S.A.
- * @license   YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license   YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  * @author    Sławomir Kłos <s.klos@yetiforce.com>
  * @author    Mariusz Krzaczkowski <m.krzaczkowski@yetiforce.com>
  */
@@ -100,7 +100,7 @@ class Configuration extends \App\SystemWarnings\Template
 			$this->description = \App\Language::translateArgs(
 					'LBL_CONFIG_SERVER_DESC',
 					'Settings:SystemWarnings',
-					'<a target="_blank" rel="noreferrer noopener" href="https://yetiforce.com/en/knowledge-base/documentation/implementer-documentation/item/web-server-requirement"><u>' . \App\Language::translate('LBL_CONFIG_DOC_URL_LABEL', 'Settings:SystemWarnings') . '</u></a>'
+					'<a target="_blank" rel="noreferrer noopener" href="https://doc.yetiforce.com/introduction/requirements/"><u>' . \App\Language::translate('LBL_CONFIG_DOC_URL_LABEL', 'Settings:SystemWarnings') . '</u></a>'
 				) . $errorsText;
 		}
 	}

@@ -1,4 +1,4 @@
-{*<!-- {[The file is published on the basis of YetiForce Public License 5.0 that can be found in the following directory: licenses/LicenseEN.txt or yetiforce.com]} -->*}
+{*<!-- {[The file is published on the basis of YetiForce Public License 6.5 that can be found in the following directory: licenses/LicenseEN.txt or yetiforce.com]} -->*}
 {strip}
 	<!-- tpl-Base-Kanban-Kanban -->
 	<div class="mt-3 mx-0 c-kanban__columns">
@@ -29,8 +29,8 @@
 					<div class="c-kanban__sum w-100">
 						{foreach key=FIELD_NAME item=VALUE from=$DATA['sum'][$COLUMN_NAME]}
 							{assign var=FIELD_MODEL value=$MODULE_MODEL->getFieldByName($FIELD_NAME)}
-							{assign var=ICON value=$FIELD_MODEL->getIcon('Kanban')}
-							{if isset($ICON['name'])}<span class="{$ICON['name']} mr-2"></span>{/if}
+							{assign var=ICON value=$FIELD_MODEL->get('icon')}
+							{if $ICON}{\App\Layout\Media::getImageHtml($ICON)}{/if}
 							{$FIELD_MODEL->getFullLabelTranslation()}: {$FIELD_MODEL->getDisplayValue($VALUE)}<br />
 						{/foreach}
 					</div>
@@ -49,8 +49,8 @@
 												{assign var=VALUE value=$RECORD->getDisplayValue($NAME, false, false, 30)}
 												{if $NAME !== 'assigned_user_id' && $VALUE}
 													{assign var=FIELD_MODEL value=$MODULE_MODEL->getFieldByName($NAME)}
-													{assign var=ICON value=$FIELD_MODEL->getIcon('Kanban')}
-													{if isset($ICON['name'])}<span class="{$ICON['name']} mr-1"></span>{/if}
+													{assign var=ICON value=$FIELD_MODEL->get('icon')}
+													{if $ICON}{\App\Layout\Media::getImageHtml($ICON)}{/if}
 													{$VALUE}<br />
 												{/if}
 											{/foreach}
@@ -58,15 +58,13 @@
 									</div>
 									<div class="card-footer p-1 text-right">
 										<div class="float-left pr-1 btns">
-											{if $MODULE_MODEL->isSummaryViewSupported()}
-												<button type="button" role="button"
-													class="btn btn-xs btn-light js-popover-tooltip js-show-modal"
-													data-url="index.php?module={$MODULE_NAME}&view=QuickDetailModal&record={$RECORD_ID}"
-													data-content="{\App\Language::translate('LBL_SHOW_QUICK_DETAILS')}"
-													data-js="popover|click" data-placement="bottom">
-													<span class="far fa-caret-square-right u-fs-xs"></span>
-												</button>
-											{/if}
+											<button type="button" role="button"
+												class="btn btn-xs btn-light js-popover-tooltip js-show-modal"
+												data-url="index.php?module={$MODULE_NAME}&view=QuickDetailModal&record={$RECORD_ID}"
+												data-content="{\App\Language::translate('LBL_SHOW_QUICK_DETAILS')}"
+												data-js="popover|click" data-placement="bottom">
+												<span class="far fa-caret-square-right u-fs-xs"></span>
+											</button>
 											<a class="btn btn-xs btn-light js-popover-tooltip" href="{$RECORD->getDetailViewUrl()}"
 												data-content="{\App\Language::translate('LBL_SHOW_COMPLETE_DETAILS')}" data-js="popover"
 												data-placement="bottom">

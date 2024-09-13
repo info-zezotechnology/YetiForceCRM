@@ -3,7 +3,7 @@
  * Main config.
  *
  * @copyright YetiForce S.A.
- * @license   YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license   YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  */
 return [
 	'api' => [
@@ -146,10 +146,10 @@ return [
 			'validation' => '\App\Validator::languageTag',
 		],
 		'application_unique_key' => [
-			'default' => sha1(time() + random_int(1, 9999999)),
+			'default' => sha1(time() . '' . random_int(1, 9999999)),
 			'description' => 'Unique Application Key',
 			'validation' => fn () => !class_exists('\\Config\\Main'),
-			'sanitization' => fn () => sha1(time() + random_int(1, 9999999)),
+			'sanitization' => fn () => sha1(time() . '' . random_int(1, 9999999)),
 		],
 		'listview_max_textlength' => [
 			'default' => 40,
@@ -257,6 +257,23 @@ return [
 			'default' => 'basic',
 			'description' => 'Set the default layout',
 			'validation' => fn () => isset(\App\Layout::getAllLayouts()[func_get_arg(0)]),
+		],
+		'phoneFieldAdvancedVerification' => [
+			'default' => true,
+			'description' => 'Enable advanced phone number validation. Enabling it will block saving invalid phone number.',
+		],
+		'phoneFieldAdvancedHrefFormat' => [
+			'default' => new \Nette\PhpGenerator\PhpLiteral('\libphonenumber\PhoneNumberFormat::RFC3966'),
+			'description' => "Phone number display format. Values:\nfalse - formatting is disabled \n\\libphonenumber\\PhoneNumberFormat::RFC3966 - +48-44-668-18-00\n\\libphonenumber\\PhoneNumberFormat::E164 - +48446681800 \n\\libphonenumber\\PhoneNumberFormat::INTERNATIONAL - 044 668 18 00\n\\libphonenumber\\PhoneNumberFormat::NATIONAL - +48 44 668 18 00",
+			'validation' => function () {
+				return \in_array(func_get_arg(0), [
+					false,
+					\libphonenumber\PhoneNumberFormat::RFC3966,
+					\libphonenumber\PhoneNumberFormat::E164,
+					\libphonenumber\PhoneNumberFormat::INTERNATIONAL,
+					\libphonenumber\PhoneNumberFormat::NATIONAL,
+				]);
+			},
 		],
 		'headerAlertMessage' => [
 			'default' => '',
@@ -556,13 +573,6 @@ return [
 		'tileDefaultSize' => [
 			'default' => 'very_small',
 			'description' => 'Default tile size. Available sizes: very_small, small, medium, big',
-		],
-		'centerModalWindow' => [
-			'default' => true,
-			'description' => 'All modal window will be vertically centered if this option is enabled.',
-			'validation' => '\App\Validator::bool',
-			'sanitization' => '\App\Purifier::bool',
-			'docTags' => ['var' => 'bool'],
 		],
 	],
 	'performance' => [

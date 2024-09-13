@@ -8,7 +8,7 @@
  * @package App
  *
  * @copyright YetiForce S.A.
- * @license   YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license   YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  * @author    Radosław Skrzypczak <r.skrzypczak@yetiforce.com>
  * @author    Mariusz Krzaczkowski <m.krzaczkowski@yetiforce.com>
  */
@@ -96,6 +96,9 @@ class AutoAssign extends Base
 	public static function getAutoAssignForRecord(\Vtiger_Record_Model $recordModel, int $mode = null): ?self
 	{
 		$autoAssignInstance = null;
+		if (!\App\YetiForce\Shop::check('YetiForceAutoAssignment')) {
+			return $autoAssignInstance;
+		}
 		foreach (self::getByModule($recordModel->getModuleName(), $mode) as $autoAssignData) {
 			$conditions = Json::isEmpty($autoAssignData['conditions']) ? [] : Json::decode($autoAssignData['conditions']);
 			if (Condition::checkConditions($conditions, $recordModel)) {

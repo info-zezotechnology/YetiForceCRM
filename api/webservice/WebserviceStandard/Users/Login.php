@@ -5,7 +5,7 @@
  * @package API
  *
  * @copyright YetiForce S.A.
- * @license YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  * @author  Mariusz Krzaczkowski <m.krzaczkowski@yetiforce.com>
  */
 
@@ -153,7 +153,7 @@ class Login extends \Api\Core\BaseAction
 	 *		example={"column_name1" : "searched value 1", "column_name2" : "searched value 2"},
 	 *		@OA\ExternalDocumentation(
 	 *			description="Database communication engine",
-	 *			url="https://yetiforce.com/en/knowledge-base/documentation/developer-documentation/item/new-db-communication-engine"
+	 *			url="https://doc.yetiforce.com/developer-guides/system-components/databases"
 	 *		),
 	 *	),
 	 *	@OA\Schema(

@@ -8,7 +8,7 @@ namespace App;
  * @package App
  *
  * @copyright YetiForce S.A.
- * @license   YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license   YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  * @author    Mariusz Krzaczkowski <m.krzaczkowski@yetiforce.com>
  * @author    Radosław Skrzypczak <r.skrzypczak@yetiforce.com>
  */
@@ -163,17 +163,14 @@ class Db extends \yii\db\Connection
 		if (false !== stripos($conf['version_comment'], 'MariaDb')) {
 			$typeDb = 'MariaDb';
 		}
-		$maxTmpTableSize = $conf['tmp_table_size'] > $conf['max_heap_table_size'] ? $conf['max_heap_table_size'] : $conf['tmp_table_size'];
-		$serverBuffers = $conf['key_buffer_size'] + $maxTmpTableSize + ($conf['innodb_buffer_pool_size'] ?? 0) + ($conf['innodb_additional_mem_pool_size'] ?? 0) +
-		($conf['innodb_log_buffer_size'] ?? 0) + ($conf['query_cache_size'] ?? 0) + ($conf['aria_pagecache_buffer_size'] ?? 0);
-		$perThreadBuffers = $conf['read_buffer_size'] + $conf['read_rnd_buffer_size'] + $conf['sort_buffer_size'] + $conf['thread_stack'] + $conf['max_allowed_packet'] + $conf['join_buffer_size'];
-		$totalPerThreadBuffers = $conf['max_connections'] * $perThreadBuffers;
+		$memory = $conf['key_buffer_size'] + ($conf['query_cache_size'] ?? 0) + $conf['tmp_table_size'] + $conf['innodb_buffer_pool_size'] +
+		($conf['innodb_additional_mem_pool_size'] ?? 0) + $conf['innodb_log_buffer_size'] + ($conf['max_connections'] * ($conf['sort_buffer_size']
+				+ $conf['read_buffer_size'] + $conf['read_rnd_buffer_size'] + $conf['join_buffer_size'] + $conf['thread_stack'] + $conf['binlog_cache_size']));
 		return \array_merge($conf, [
 			'driver' => $this->getDriverName(),
 			'typeDb' => $typeDb,
 			'serverVersion' => $version,
-			'maxUsedMemory' => $serverBuffers + $totalPerThreadBuffers,
-			'maxUsedMemoryDesc' => \vtlib\Functions::showBytes($serverBuffers) . ' + ' . \vtlib\Functions::showBytes($totalPerThreadBuffers) . ' (' . $conf['max_connections'] . ' * ' . \vtlib\Functions::showBytes($perThreadBuffers) . ')',
+			'maximumMemorySize' => $memory,
 			'clientVersion' => $pdo->getAttribute(\PDO::ATTR_CLIENT_VERSION),
 			'connectionStatus' => $pdo->getAttribute(\PDO::ATTR_CONNECTION_STATUS),
 			'serverInfo' => $pdo->getAttribute(\PDO::ATTR_SERVER_INFO),

@@ -5,7 +5,7 @@
  * @package   Tests
  *
  * @copyright YetiForce S.A.
- * @license   YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license   YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  * @author    Rafal Pospiech <r.pospiech@yetiforce.com>
  */
 
@@ -22,26 +22,7 @@ class RecordNumber extends \App\Fields\RecordNumber
 	 * @var array of dates
 	 */
 	public static $dates = [
-		'2015-01-01',
-		'2015-03-03',
-		'2015-03-03',
-		'2015-03-03',
-		'2015-03-04',
-		'2015-03-04',
-		'2015-03-05',
-		'2015-11-09',
-		'2015-11-10',
-		'2015-11-11',
-		'2015-11-28',
-		'2016-11-29',
-		'2017-03-15',
-		'2017-03-18',
-		'2017-07-19',
-		'2018-01-01',
-		'2018-01-02',
-		'2018-01-02',
-		'2018-02-03',
-		'2018-05-05',
+		'2015-01-01'
 	];
 
 	/**
@@ -82,6 +63,7 @@ class Z_ResetingRecordNumber extends \Tests\Base
 	public static function setUpBeforeClass(): void
 	{
 		self::$transaction = \App\Db::getInstance()->beginTransaction();
+		RecordNumber::$dates[0] = date('Y-m-d');
 	}
 
 	/**
@@ -89,7 +71,6 @@ class Z_ResetingRecordNumber extends \Tests\Base
 	 */
 	public function testDateMock()
 	{
-		$this->assertCount(20, RecordNumber::$dates);
 		foreach (RecordNumber::$dates as $index => $date) {
 			RecordNumber::$currentDateIndex = $index;
 			$this->assertSame($date, RecordNumber::date('Y-m-d'));

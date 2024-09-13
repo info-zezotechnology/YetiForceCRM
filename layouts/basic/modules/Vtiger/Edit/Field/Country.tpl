@@ -1,4 +1,4 @@
-{*<!-- {[The file is published on the basis of YetiForce Public License 5.0 that can be found in the following directory: licenses/LicenseEN.txt or yetiforce.com]} -->*}
+{*<!-- {[The file is published on the basis of YetiForce Public License 6.5 that can be found in the following directory: licenses/LicenseEN.txt or yetiforce.com]} -->*}
 {strip}
 	<!-- tpl-Base-Edit-Field-Country -->
 	{assign var=FIELD_INFO value=\App\Json::encode($FIELD_MODEL->getFieldInfo())}
@@ -7,10 +7,8 @@
 	{assign var=SPECIAL_VALIDATOR value=$FIELD_MODEL->getValidator()}
 	{assign var=FIELD_VALUE value=$FIELD_MODEL->getEditViewDisplayValue($FIELD_MODEL->get('fieldvalue'),$RECORD)}
 	{assign var=PLACE_HOLDER value=($FIELD_MODEL->isEmptyPicklistOptionAllowed() && !($FIELD_MODEL->isMandatory() eq true && $FIELD_VALUE neq ''))}
-	{assign var=IS_LAZY value=count($PICKLIST_VALUES) > \App\Config::performance('picklistLimit')}
 	<div>
 		<select name="{$FIELD_MODEL->getFieldName()}" class="select2 form-control" tabindex="{$FIELD_MODEL->getTabIndex()}"
-			{if $IS_LAZY} data-select-lazy="true" {/if}
 			title="{\App\Language::translate($FIELD_MODEL->getFieldLabel(), $MODULE)}" data-template-result="prependDataTemplate" data-template-selection="prependDataTemplate"
 			data-validation-engine="validate[{if $FIELD_MODEL->isMandatory() eq true} required,{/if}funcCall[Vtiger_Base_Validator_Js.invokeValidation]]"
 			{if $PLACE_HOLDER}data-select="allowClear" data-placeholder="{\App\Language::translate('LBL_SELECT_OPTION')}" {/if} data-fieldinfo='{$FIELD_INFO|escape}'

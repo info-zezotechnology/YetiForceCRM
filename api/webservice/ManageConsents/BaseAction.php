@@ -5,7 +5,7 @@
  * @package API
  *
  * @copyright YetiForce S.A.
- * @license 	YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license 	YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  * @author    Radosław Skrzypczak <r.skrzypczak@yetiforce.com>
  * @author    Mariusz Krzaczkowski <m.krzaczkowski@yetiforce.com>
  */
@@ -28,11 +28,24 @@ use OpenApi\Annotations as OA;
  * - __CRM_URL__/webservice.php?_container=ManageConsents&module=Accounts&action=RecordRelatedList&record=117&param=Contacts",
  * 		version="0.2",
  * 		termsOfService="https://yetiforce.com/",
- *   	@OA\Contact(email="devs@yetiforce.com", name="Devs API Team", url="https://yetiforce.com/"),
- *   	@OA\License(name="YetiForce Public License", url="https://yetiforce.com/en/yetiforce/license"),
+ *   	@OA\Contact(
+ *     		email="devs@yetiforce.com",
+ *     		name="Devs API Team",
+ *     		url="https://yetiforce.com/"
+ *   	),
+ *   	@OA\License(
+ *    		name="YetiForce Public License",
+ *     		url="https://yetiforce.com/en/yetiforce/license"
+ *		),
  * )
- * @OA\Server(description="Demo server of the development version", url="https://gitdeveloper.yetiforce.com")
- * @OA\Server(description="Demo server of the latest stable version", url="https://gitstable.yetiforce.com")
+ * @OA\Server(
+ *		url="https://gitdeveloper.yetiforce.com",
+ *		description="Demo server of the development version",
+ * )
+ * @OA\Server(
+ *		url="https://gitstable.yetiforce.com",
+ *		description="Demo server of the latest stable version",
+ * )
  */
 class BaseAction extends \Api\Core\BaseAction
 {

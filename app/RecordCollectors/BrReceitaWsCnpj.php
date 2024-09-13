@@ -7,7 +7,7 @@
  * @package App
  *
  * @copyright YetiForce S.A.
- * @license   YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license   YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  * @author    Sławomir Rembiesa <s.rembiesa@yetiforce.com>
  * @author    Mariusz Krzaczkowski <m.krzaczkowski@yetiforce.com>
  */
@@ -37,37 +37,9 @@ class BrReceitaWsCnpj extends Base
 	/** {@inheritdoc} */
 	public $docUrl = 'https://developers.receitaws.com.br/#/operations/queryCNPJFree';
 
-	/** @var string CNJP sever address */
-	private $url = 'https://receitaws.com.br/v1/cnpj/';
-
-	/** @var string Api key */
-	private $apiKey;
-
 	/** {@inheritdoc} */
 	public $settingsFields = [
 		'api_key' => ['required' => 0, 'purifyType' => 'Text', 'label' => 'LBL_API_KEY_OPTIONAL'],
-	];
-
-	/** {@inheritdoc} */
-	protected $fields = [
-		'cnpj' => [
-			'labelModule' => 'Other.RecordCollector',
-			'label' => 'LBL_BR_RECITA_WS_CNPJ_NUMBER',
-			'typeofdata' => 'V~O',
-		]
-	];
-
-	/** {@inheritdoc} */
-	protected $modulesFieldsMap = [
-		'Accounts' => [
-			'cnpj' => 'registration_number_1',
-		],
-		'Leads' => [
-			'cnpj' => 'registration_number_1',
-		],
-		'Vendors' => [
-			'cnpj' => 'registration_number_1',
-		]
 	];
 
 	/** {@inheritdoc} */
@@ -131,6 +103,37 @@ class BrReceitaWsCnpj extends Base
 			'bairro' => 'addresslevel4a',
 		],
 	];
+
+	/** {@inheritdoc} */
+	protected $fields = [
+		'cnpj' => [
+			'labelModule' => 'Other.RecordCollector',
+			'label' => 'LBL_BR_RECITA_WS_CNPJ_NUMBER',
+			'typeofdata' => 'V~O',
+		]
+	];
+
+	/** {@inheritdoc} */
+	protected $modulesFieldsMap = [
+		'Accounts' => [
+			'cnpj' => 'registration_number_1',
+		],
+		'Leads' => [
+			'cnpj' => 'registration_number_1',
+		],
+		'Vendors' => [
+			'cnpj' => 'registration_number_1',
+		]
+	];
+
+	/** {@inheritdoc} */
+	protected string $addOnName = 'YetiForceRcBrReceitaWsCnpj';
+
+	/** @var string CNJP sever address */
+	private $url = 'https://receitaws.com.br/v1/cnpj/';
+
+	/** @var string Api key */
+	private $apiKey;
 
 	/** {@inheritdoc} */
 	public function search(): array

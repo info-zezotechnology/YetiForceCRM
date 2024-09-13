@@ -1,4 +1,4 @@
-{*<!-- {[The file is published on the basis of YetiForce Public License 5.0 that can be found in the following directory: licenses/LicenseEN.txt or yetiforce.com]} -->*}
+{*<!-- {[The file is published on the basis of YetiForce Public License 6.5 that can be found in the following directory: licenses/LicenseEN.txt or yetiforce.com]} -->*}
 {strip}
 	<!-- tpl-Settings-SlaPolicy-EditViewBlocks -->
 	<div class='verticalScroll'>
@@ -31,7 +31,7 @@
 						<div class="form-group row">
 							<div class="col-12 col-md-3">
 								<label>{\App\Language::translate('LBL_NAME',$QUALIFIED_MODULE)}</label>
-								<input type="text" name="name" class="form-control" value="{\App\Purifier::encodeHtml($RECORD->getName())}" data-validation-engine="validate[required,maxSize[255]]">
+								<input type="text" name="name" class="form-control" value="{if !empty($RECORD_ID)}{\App\Purifier::encodeHtml($RECORD->getName())}{/if}" data-validation-engine="validate[required,maxSize[255]]">
 							</div>
 							<div class="col-12 col-md-3">
 								<label>{\App\Language::translate('LBL_SOURCE_MODULE',$QUALIFIED_MODULE)}</label>

@@ -332,7 +332,8 @@ class Settings_Workflows_Record_Model extends Settings_Vtiger_Record_Model
 		if (null === $executionCondition) {
 			$executionCondition = $this->get('execution_condition');
 		}
-		return Settings_Workflows_Module_Model::TRIGGER_TYPES[$executionCondition] ?? '';
+		$arr = ['ON_FIRST_SAVE', 'ONCE', 'ON_EVERY_SAVE', 'ON_MODIFY', 'ON_DELETE', 'ON_SCHEDULE', 'MANUAL', 'TRIGGER', 'BLOCK_EDIT', 'ON_RELATED'];
+		return $arr[$executionCondition - 1] ?? '';
 	}
 
 	/**

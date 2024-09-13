@@ -5,9 +5,8 @@
  * @package App
  *
  * @copyright YetiForce S.A.
- * @license   YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license   YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  * @author    Mariusz Krzaczkowski <m.krzaczkowski@yetiforce.com>
- * @author    Radosław Skrzypczak <r.skrzypczak@yetiforce.com>
  */
 
 namespace App;
@@ -21,20 +20,12 @@ class TextUtils
 	 * Get text length.
 	 *
 	 * @param string $text
-	 * @param bool   $strict Text length in bytes
 	 *
 	 * @return int
 	 */
-	public static function getTextLength($text, bool $strict = false)
+	public static function getTextLength($text)
 	{
-		$lenght = 0;
-		if ($strict) {
-			$lenght = null !== $text ? \strlen($text) : 0;
-		} else {
-			$lenght = null !== $text ? mb_strlen($text) : 0;
-		}
-
-		return $lenght;
+		return null !== $text ? mb_strlen($text) : 0;
 	}
 
 	/**
@@ -43,26 +34,24 @@ class TextUtils
 	 * @param string   $text
 	 * @param bool|int $length
 	 * @param bool     $addDots
-	 * @param bool     $strict  Used when a string length in bytes is required
 	 *
 	 * @return string
 	 */
-	public static function textTruncate($text, $length = false, $addDots = true, bool $strict = false)
+	public static function textTruncate($text, $length = false, $addDots = true)
 	{
 		if (!$length) {
 			$length = Config::main('listview_max_textlength');
 		}
-		$textLength = self::getTextLength($text, $strict);
-		if ($textLength > $length) {
+		$textLength = 0;
+		if (null !== $text) {
+			$textLength = mb_strlen($text);
+		}
+		if ((!$addDots && $textLength > $length) || ($addDots && $textLength > $length + 2)) {
+			$text = mb_substr($text, 0, $length, Config::main('default_charset'));
 			if ($addDots) {
-				$length = $length > 3 ? $length - 3 : 0;
-				$text = $strict ? mb_strcut($text, 0, $length, Config::main('default_charset')) : mb_substr($text, 0, $length, Config::main('default_charset'));
 				$text .= '...';
-			} else {
-				$text = $strict ? mb_strcut($text, 0, $length, Config::main('default_charset')) : mb_substr($text, 0, $length, Config::main('default_charset'));
 			}
 		}
-
 		return $text;
 	}
 
@@ -197,29 +186,5 @@ class TextUtils
 			}
 		}
 		return $attributes;
-	}
-
-	/**
-	 * Truncating text.
-	 *
-	 * @param string   $text
-	 * @param bool|int $length
-	 * @param bool     $addDots
-	 * @param bool     $strict  Used when a string length in bytes is required
-	 *
-	 * @return string
-	 */
-	public static function textTruncateWithTooltip($text, $length = false, $addDots = true, bool $strict = false)
-	{
-		$truncateText = self::textTruncate($text, $length, $addDots, $strict);
-		if (!$length) {
-			$length = Config::main('listview_max_textlength');
-		}
-		if (\strlen($text) > $length) {
-			$truncateText .= '<span class="js-popover-tooltip ml-1 d-inline my-auto u-h-fit u-cursor-pointer" data-placement="top" data-content="' . \App\Purifier::encodeHtml($text) . '">
-			<span class="fas fa-info-circle"></span>
-			</span>';
-		}
-		return $truncateText;
 	}
 }

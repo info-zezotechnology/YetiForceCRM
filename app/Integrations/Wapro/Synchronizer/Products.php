@@ -6,7 +6,7 @@
  * @package Integration
  *
  * @copyright YetiForce S.A.
- * @license   YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license   YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  * @author    Mariusz Krzaczkowski <m.krzaczkowski@yetiforce.com>
  */
 
@@ -19,9 +19,6 @@ class Products extends \App\Integrations\Wapro\Synchronizer
 {
 	/** {@inheritdoc} */
 	const NAME = 'LBL_PRODUCTS';
-
-	/** {@inheritdoc} */
-	const MODULE_NAME = 'Products';
 
 	/** {@inheritdoc} */
 	const SEQUENCE = 4;
@@ -52,10 +49,7 @@ class Products extends \App\Integrations\Wapro\Synchronizer
 	public function process(): int
 	{
 		$query = (new \App\Db\Query())->select([
-			'dbo.ARTYKUL.ID_ARTYKULU', 'dbo.ARTYKUL.NAZWA', 'dbo.ARTYKUL.STAN', 'dbo.ARTYKUL.STAN_MINIMALNY',
-			'dbo.ARTYKUL.STAN_MAKSYMALNY', 'dbo.ARTYKUL.INDEKS_KATALOGOWY', 'dbo.ARTYKUL.INDEKS_HANDLOWY',
-			'dbo.ARTYKUL.INDEKS_PRODUCENTA', 'dbo.ARTYKUL.VAT_SPRZEDAZY', 'dbo.ARTYKUL.CENA_ZAKUPU_BRUTTO',
-			'dbo.ARTYKUL.KOD_KRESKOWY', 'dbo.ARTYKUL.OPIS', 'dbo.ARTYKUL.WAGA',
+			'dbo.ARTYKUL.*',
 			'category' => 'dbo.KATEGORIA_ARTYKULU_TREE.NAZWA',
 			'unitName' => 'dbo.JEDNOSTKA.SKROT',
 			'total' => 'dbo.CENA_ARTYKULU.CENA_NETTO',
@@ -111,15 +105,12 @@ class Products extends \App\Integrations\Wapro\Synchronizer
 	public function importRecord(): int
 	{
 		if ($id = $this->findInMapTable($this->waproId, 'ARTYKUL')) {
-			$this->recordModel = \Vtiger_Record_Model::getInstanceById($id, self::MODULE_NAME);
+			$this->recordModel = \Vtiger_Record_Model::getInstanceById($id, 'Products');
 		} else {
-			$this->recordModel = \Vtiger_Record_Model::getCleanInstance(self::MODULE_NAME);
+			$this->recordModel = \Vtiger_Record_Model::getCleanInstance('Products');
 			$this->recordModel->setDataForSave([\App\Integrations\Wapro::RECORDS_MAP_TABLE_NAME => [
 				'wtable' => 'ARTYKUL',
 			]]);
-			if ($userId = $this->searchUserInActivity($this->waproId, 'ARTYKUL')) {
-				$this->recordModel->set('assigned_user_id', $userId);
-			}
 		}
 		$this->recordModel->set('wapro_id', $this->waproId);
 		$this->recordModel->set('discontinued', 1);
@@ -216,10 +207,7 @@ class Products extends \App\Integrations\Wapro\Synchronizer
 			return $this->cache[$id];
 		}
 		return $this->cache[$id] = (new \App\Db\Query())->select([
-			'dbo.ARTYKUL.ID_ARTYKULU', 'dbo.ARTYKUL.NAZWA', 'dbo.ARTYKUL.STAN', 'dbo.ARTYKUL.STAN_MINIMALNY',
-			'dbo.ARTYKUL.STAN_MAKSYMALNY', 'dbo.ARTYKUL.INDEKS_KATALOGOWY', 'dbo.ARTYKUL.INDEKS_HANDLOWY',
-			'dbo.ARTYKUL.INDEKS_PRODUCENTA', 'dbo.ARTYKUL.VAT_SPRZEDAZY',
-			'dbo.ARTYKUL.KOD_KRESKOWY', 'dbo.ARTYKUL.OPIS', 'dbo.ARTYKUL.WAGA',
+			'dbo.ARTYKUL.*',
 			'category' => 'dbo.KATEGORIA_ARTYKULU_TREE.NAZWA',
 			'unitName' => 'dbo.JEDNOSTKA.SKROT',
 			'total' => 'dbo.CENA_ARTYKULU.CENA_NETTO',

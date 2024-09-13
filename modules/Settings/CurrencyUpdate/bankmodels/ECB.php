@@ -1,7 +1,7 @@
 <?php
 /**
  * @copyright YetiForce S.A.
- * @license   YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license   YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  * @author    Maciej Stencel <m.stencel@yetiforce.com>
  */
 
@@ -21,7 +21,7 @@ class Settings_CurrencyUpdate_ECB_BankModel extends Settings_CurrencyUpdate_Abst
 
 	public function getSource()
 	{
-		return ['http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml', 'http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist.xml'];
+		return ['https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml', 'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist.xml'];
 	}
 
 	// Returns list of currencies supported by this bank

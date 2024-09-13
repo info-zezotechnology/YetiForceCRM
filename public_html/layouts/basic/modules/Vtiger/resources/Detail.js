@@ -171,8 +171,7 @@ jQuery.Class(
 				});
 		},
 		showWorkflowTriggerView: function (instance) {
-			let element = $(instance);
-			element.popover('hide');
+			$(instance).popover('hide');
 			const detailInstance = Vtiger_Detail_Js.getInstance(),
 				callback = function (data) {
 					let treeInstance = data.find('#treeWorkflowContents');
@@ -216,11 +215,11 @@ jQuery.Class(
 								type: 'info'
 							});
 							AppConnector.request({
-								module: element.data('module') || app.getModuleName(),
+								module: app.getModuleName(),
 								action: 'Workflow',
 								mode: 'execute',
 								user: data.find('[name="user"]').val(),
-								record: element.data('id') || detailInstance.getRecordId(),
+								record: detailInstance.getRecordId(),
 								tasks: JSON.stringify(tasks)
 							})
 								.done(function () {
@@ -244,9 +243,9 @@ jQuery.Class(
 					});
 				};
 			AppConnector.request({
-				module: element.data('module') || app.getModuleName(),
+				module: app.getModuleName(),
 				view: 'WorkflowTrigger',
-				record: element.data('id') || detailInstance.getRecordId()
+				record: detailInstance.getRecordId()
 			}).done(function (data) {
 				if (data) {
 					app.showModalWindow(data, '', callback);
@@ -870,6 +869,24 @@ jQuery.Class(
 				let recordLabelElement = detailContentsHolder.closest('.contentsDiv').find('.' + name + '_label');
 				recordLabelElement.text(recordLabel);
 			}
+		},
+		/*
+		 * Function to register the click event of email field
+		 */
+		registerEmailFieldClickEvent: function () {
+			let detailContentsHolder = this.getContentHolder();
+			detailContentsHolder.on('click', '.emailField', function (e) {
+				e.stopPropagation();
+			});
+		},
+		/*
+		 * Function to register the click event of phone field
+		 */
+		registerPhoneFieldClickEvent: function () {
+			let detailContentsHolder = this.getContentHolder();
+			detailContentsHolder.on('click', '.phoneField', function (e) {
+				e.stopPropagation();
+			});
 		},
 		/*
 		 * Function to register the click event of url field
@@ -2657,7 +2674,6 @@ jQuery.Class(
 					tabElement.trigger('click');
 				});
 			app.registerIframeEvents(detailContentsHolder);
-			app.registerBlockToggleEvent(detailContentsHolder);
 		},
 		reloadWidgetActivitesStats: function (container) {
 			let countElement = container.find('.countActivities');
@@ -2828,6 +2844,8 @@ jQuery.Class(
 			this.registerAjaxEditEvent();
 			this.registerRelatedRowClickEvent();
 			this.registerBlockStatusCheckOnLoad();
+			this.registerEmailFieldClickEvent();
+			this.registerPhoneFieldClickEvent();
 			this.registerEventForRelatedTabClick();
 			Vtiger_Helper_Js.showHorizontalTopScrollBar();
 			this.registerUrlFieldClickEvent();

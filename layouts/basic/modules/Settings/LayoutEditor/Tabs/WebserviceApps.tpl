@@ -1,4 +1,4 @@
-{*<!-- {[The file is published on the basis of YetiForce Public License 5.0 that can be found in the following directory: licenses/LicenseEN.txt or yetiforce.com]} -->*}
+{*<!-- {[The file is published on the basis of YetiForce Public License 6.5 that can be found in the following directory: licenses/LicenseEN.txt or yetiforce.com]} -->*}
 {strip}
 	<!-- tpl-Settings-LayoutEditor-Tabs-WebserviceApps -->
 	{assign var=CHECK_ALERT value=\App\YetiForce\Shop::checkAlert('YetiForceWebservicePremium')}
@@ -40,8 +40,8 @@
 												<div class="col-12 pr-0 js-field-container fieldContainer"
 													style="word-wrap: break-word;">
 													<span class="fieldLabel">
-														{assign var=ICON value=$FIELD_MODEL->getIcon()}
-														{if isset($ICON['name'])}<span class="{$ICON['name']} mr-2"></span>{/if}
+														{assign var=ICON value=$FIELD_MODEL->get('icon')}
+														{if $ICON}{\App\Layout\Media::getImageHtml($ICON)}{/if}
 														{App\Language::translate($FIELD_MODEL->getFieldLabel(), $SELECTED_MODULE_NAME)}
 														{if $FIELD_MODEL->isMandatory()}
 															<span class="redColor">*</span>

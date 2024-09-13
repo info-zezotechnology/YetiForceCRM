@@ -22,10 +22,7 @@ require_once 'include/Webservices/Utils.php';
 
 class DateTimeField
 {
-	/** @var string Date and time. */
 	protected $datetime;
-
-	/** @var array Cache for time and time zones. */
 	private static $cache = [];
 
 	/**
@@ -36,6 +33,8 @@ class DateTimeField
 		if (empty($value)) {
 			$value = date('Y-m-d H:i:s');
 		}
+		$this->date = null;
+		$this->time = null;
 		$this->datetime = $value;
 	}
 
@@ -245,9 +244,9 @@ class DateTimeField
 	}
 
 	/**
-	 * @param string $time
-	 * @param string $sourceTimeZoneName
-	 * @param string $targetTimeZoneName
+	 * @param type $time
+	 * @param type $sourceTimeZoneName
+	 * @param type $targetTimeZoneName
 	 *
 	 * @return DateTime
 	 */

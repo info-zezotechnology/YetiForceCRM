@@ -3,7 +3,7 @@
  * Announcements Module Model Class.
  *
  * @copyright YetiForce S.A.
- * @license YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  * @author Mariusz Krzaczkowski <m.krzaczkowski@yetiforce.com>
  */
 
@@ -155,6 +155,6 @@ class Announcements_Module_Model extends Vtiger_Module_Model
 	 */
 	public function getMarkInfo($record, $userId)
 	{
-		return (new App\Db\Query())->from('u_#__announcement_mark')->where(['announcementid' => $record, 'userid' => $userId])->one();
+		return (new App\Db\Query())->from('u_#__announcement_mark')->where(['announcementid' => $record, 'userid' => $userId])->one() ?: [];
 	}
 }

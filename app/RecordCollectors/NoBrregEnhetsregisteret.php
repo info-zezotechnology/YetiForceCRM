@@ -7,7 +7,7 @@
  * @package App
  *
  * @copyright YetiForce S.A.
- * @license   YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license   YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  * @author    Sławomir Rembiesa <s.rembiesa@yetiforce.com>
  * @author    Mariusz Krzaczkowski <m.krzaczkowski@yetiforce.com>
  */
@@ -19,6 +19,9 @@ namespace App\RecordCollectors;
  */
 class NoBrregEnhetsregisteret extends Base
 {
+	/** @var string CH sever address */
+	const EXTERNAL_URL = 'https://data.brreg.no/enhetsregisteret/oppslag/enheter/';
+
 	/** {@inheritdoc} */
 	public $allowedModules = ['Accounts', 'Leads', 'Vendors', 'Partners', 'Competition'];
 
@@ -36,33 +39,6 @@ class NoBrregEnhetsregisteret extends Base
 
 	/** {@inheritdoc} */
 	public $docUrl = 'https://www.brreg.no/produkter-og-tjenester/apne-data/';
-
-	/** @var string CH sever address */
-	const EXTERNAL_URL = 'https://data.brreg.no/enhetsregisteret/oppslag/enheter/';
-
-	/** @var string Enhetsregisteret sever address */
-	private $url = 'https://data.brreg.no/enhetsregisteret/api/enheter/';
-
-	/** {@inheritdoc} */
-	protected $fields = [
-		'companyNumber' => [
-			'labelModule' => '_Base',
-			'label' => 'Registration number 1',
-		]
-	];
-
-	/** {@inheritdoc} */
-	protected $modulesFieldsMap = [
-		'Accounts' => [
-			'companyNumber' => 'registration_number_1',
-		],
-		'Leads' => [
-			'companyNumber' => 'registration_number_1',
-		],
-		'Vendors' => [
-			'companyNumber' => 'registration_number_1',
-		],
-	];
 
 	/** {@inheritdoc} */
 	public $formFieldsToRecordMap = [
@@ -111,6 +87,32 @@ class NoBrregEnhetsregisteret extends Base
 			'forretningsadresseLand' => 'addresslevel1a',
 		],
 	];
+	/** {@inheritdoc} */
+	protected string $addOnName = 'YetiForceRcNoBrregEnhetsreg';
+
+	/** {@inheritdoc} */
+	protected $fields = [
+		'companyNumber' => [
+			'labelModule' => '_Base',
+			'label' => 'Registration number 1',
+		]
+	];
+
+	/** {@inheritdoc} */
+	protected $modulesFieldsMap = [
+		'Accounts' => [
+			'companyNumber' => 'registration_number_1',
+		],
+		'Leads' => [
+			'companyNumber' => 'registration_number_1',
+		],
+		'Vendors' => [
+			'companyNumber' => 'registration_number_1',
+		],
+	];
+
+	/** @var string Enhetsregisteret sever address */
+	private $url = 'https://data.brreg.no/enhetsregisteret/api/enheter/';
 
 	/** {@inheritdoc} */
 	public function search(): array
@@ -146,9 +148,13 @@ class NoBrregEnhetsregisteret extends Base
 				return;
 			}
 		}
-		$this->data = isset($response) ? $this->parseData(\App\Json::decode($response->getBody()->getContents())) : [];
-		$this->response['links'][0] = self::EXTERNAL_URL . $companyNumber;
-		unset($this->data['_linksSelfHref']);
+		if (empty($response)) {
+			$this->response['error'] = \App\Language::translate('LBL_COMPANY_NOT_FOUND', 'Other.RecordCollector');
+		} else {
+			$this->data = $this->parseData(\App\Json::decode($response->getBody()->getContents()));
+			$this->response['links'][0] = self::EXTERNAL_URL . $companyNumber;
+			unset($this->data['_linksSelfHref']);
+		}
 	}
 
 	/**

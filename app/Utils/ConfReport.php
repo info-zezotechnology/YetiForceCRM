@@ -6,7 +6,7 @@
  * @package App
  *
  * @copyright YetiForce S.A.
- * @license   YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license   YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  * @author    Mariusz Krzaczkowski <m.krzaczkowski@yetiforce.com>
  * @author    Radosław Skrzypczak <r.skrzypczak@yetiforce.com>
  */
@@ -80,7 +80,7 @@ class ConfReport
 		'date.timezone' => ['type' => 'TimeZone', 'container' => 'php', 'testCli' => true], //Roundcube
 		'allow_url_fopen' => ['recommended' => 'On', 'type' => 'OnOff', 'container' => 'php', 'testCli' => true], //Roundcube
 		'auto_detect_line_endings' => ['recommended' => 'On', 'type' => 'OnOff', 'container' => 'php', 'testCli' => true], //CSVReader
-		'httpMethods' => ['recommended' => 'GET, POST, PUT, OPTIONS, PATCH, PROPFIND, REPORT, LOCK, DELETE, COPY, MOVE', 'type' => 'HttpMethods', 'container' => 'request', 'testCli' => true, 'label' => 'HTTP_METHODS'],
+		// 'httpMethods' => ['recommended' => 'GET, POST, PUT, OPTIONS, PATCH, PROPFIND, REPORT, LOCK, DELETE, COPY, MOVE', 'type' => 'HttpMethods', 'container' => 'request', 'testCli' => true, 'label' => 'HTTP_METHODS'],
 		'request_order' => ['recommended' => 'GP', 'type' => 'Equal', 'container' => 'php', 'testCli' => true],
 		'variables_order' => ['recommended' => 'GPCS', 'type' => 'Equal', 'container' => 'php', 'testCli' => true],
 		'opcache.jit' => ['container' => 'php', 'testCli' => true],
@@ -167,7 +167,7 @@ class ConfReport
 		'OPcache' => ['mandatory' => false, 'type' => 'ExtExist', 'extName' => 'Zend OPcache', 'container' => 'ext', 'testCli' => true,  'showHelp' => true, 'mode' => 'showWarnings'],
 		'apcu' => ['mandatory' => false, 'type' => 'ExtExist', 'extName' => 'apcu', 'container' => 'ext', 'testCli' => true,  'showHelp' => true, 'mode' => 'showWarnings'],
 		'imagick' => ['mandatory' => false, 'type' => 'ExtExist', 'extName' => 'imagick', 'container' => 'ext', 'testCli' => true,  'showHelp' => true, 'mode' => 'showWarnings'],
-		'pdo_sqlsrv' => ['mandatory' => false, 'type' => 'ExtExist', 'extName' => 'pdo_sqlsrv', 'container' => 'ext', 'testCli' => true,  'showHelp' => true, 'mode' => 'showWarnings'],
+		'pdo_sqlsrv' => ['mandatory' => false, 'type' => 'ExtExist', 'extName' => 'pdo_sqlsrv', 'container' => 'ext', 'testCli' => true,  'showHelp' => false, 'mode' => 'showWarnings'],
 		'allExt' => ['container' => 'ext', 'type' => 'AllExt', 'testCli' => true, 'label' => 'EXTENSIONS'],
 	];
 
@@ -326,7 +326,6 @@ class ConfReport
 	public static $environment = [
 		'crmVersion' => ['container' => 'env', 'testCli' => false, 'label' => 'CRM_VERSION'],
 		'crmDate' => ['container' => 'env', 'testCli' => false, 'label' => 'CRM_DATE'],
-		'companySize' => ['container' => 'env', 'testCli' => false, 'label' => 'COMPANY_SIZE'],
 		'operatingSystem' => ['container' => 'env', 'testCli' => true, 'label' => 'OPERATING_SYSTEM'],
 		'serverSoftware' => ['container' => 'env', 'testCli' => false, 'label' => 'SERVER_SOFTWARE'],
 		'currentUser' => ['container' => 'env', 'type' => 'CronEqual', 'testCli' => true, 'label' => 'SCRIPT_USER'],
@@ -437,10 +436,8 @@ class ConfReport
 	 */
 	public static $functionalVerification = [
 		'branding' => ['type' => 'Branding',  'testCli' => false, 'label' => 'FOOTER', 'mode' => 'onlyText'],
-		'shop' => ['type' => 'ShopProducts',  'testCli' => false, 'label' => 'PREMIUM_MODULES', 'mode' => 'onlyText'],
 		'watchdog' => ['type' => 'Watchdog',  'testCli' => true, 'label' => 'WATCHDOG', 'mode' => 'onlyText'],
 		'register' => ['type' => 'Register',  'testCli' => true, 'label' => 'REGISTER', 'mode' => 'onlyText'],
-		'shopCache' => ['type' => 'ShopCache',  'testCli' => true, 'label' => 'SHOP_CACHE', 'mode' => 'onlyText'],
 	];
 	/**
 	 * Php variables.
@@ -618,7 +615,6 @@ class ConfReport
 				'public_html' => IS_PUBLIC_DIR ? 'On' : 'Off',
 				'crmVersion' => \App\Version::get(),
 				'crmDate' => \App\Version::get('patchVersion'),
-				'companySize' => \App\Config::main('application_unique_key') ? \App\Company::getSize() : '-',
 				'crmDir' => ROOT_DIRECTORY,
 				'operatingSystem' => 'demo' === \App\Config::main('systemMode') ? php_uname('s') : php_uname(),
 				'serverSoftware' => $_SERVER['SERVER_SOFTWARE'] ?? '-',
@@ -1637,31 +1633,6 @@ class ConfReport
 		}
 		unset($name);
 		$row[$sapi] = \App\Language::translate($row['status'] ? 'LBL_YES' : 'LBL_NO');
-		return $row;
-	}
-
-	/**
-	 * Validate shop products.
-	 *
-	 * @param string $name
-	 * @param array  $row
-	 * @param string $sapi
-	 *
-	 * @return array
-	 */
-	public static function validateShopProducts(string $name, array $row, string $sapi)
-	{
-		unset($name);
-		$row['status'] = true;
-		$status = '';
-		foreach (\App\YetiForce\Shop::getProducts() as $name => $product) {
-			$verify = $product->verify();
-			if (!$verify['status']) {
-				$status .= $name . '(' . \strlen($verify['message']) . '), ';
-				$row['status'] = false;
-			}
-		}
-		$row[$sapi] = $status ? trim($status, ', ') : ('shop' === $sapi ? '' : \App\Language::translate('LBL_YES'));
 		return $row;
 	}
 

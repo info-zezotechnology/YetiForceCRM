@@ -8,7 +8,7 @@
  * @package App
  *
  * @copyright YetiForce S.A.
- * @license   YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license   YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  * @author    Sławomir Rembiesa <s.rembiesa@yetiforce.com>
  * @author    Mariusz Krzaczkowski <m.krzaczkowski@yetiforce.com>
  */
@@ -37,6 +37,8 @@ class UkVatPayerStatusVerification extends Base
 
 	/** {@inheritdoc} */
 	public $docUrl = 'https://developer.service.hmrc.gov.uk/api-documentation';
+	/** {@inheritdoc} */
+	protected string $addOnName = 'YetiForceRcUkVatPayerStatus';
 
 	/** @var string API sever address */
 	protected $url = 'https://api.service.hmrc.gov.uk/';

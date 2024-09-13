@@ -1,4 +1,4 @@
-{*<!-- {[The file is published on the basis of YetiForce Public License 5.0 that can be found in the following directory: licenses/LicenseEN.txt or yetiforce.com]} -->*}
+{*<!-- {[The file is published on the basis of YetiForce Public License 6.5 that can be found in the following directory: licenses/LicenseEN.txt or yetiforce.com]} -->*}
 {strip}
 	<!-- tpl-Settings-LayoutEditor-Tabs-DetailViewLayout -->
 	{assign var=FIELD_TYPE_INFO value=$SELECTED_MODULE_MODEL->getAddFieldTypeInfo()}
@@ -100,8 +100,8 @@
 														</a>
 													{/if}
 													<span class="fieldLabel">
-														{assign var=ICON value=$FIELD_MODEL->getIcon()}
-														{if isset($ICON['name'])}<span class="{$ICON['name']} mr-2"></span>{/if}
+														{assign var=ICON value=$FIELD_MODEL->get('icon')}
+														{if $ICON}{\App\Layout\Media::getImageHtml($ICON)}{/if}
 														{App\Language::translate($FIELD_MODEL->getFieldLabel(), $SELECTED_MODULE_NAME)}
 														<span class="redColor {if !$IS_MANDATORY}d-none{/if}">*</span>
 														<span class="ml-3 badge badge-secondary d-none d-sm-inline-block">{$FIELD_MODEL->getName()}</span>

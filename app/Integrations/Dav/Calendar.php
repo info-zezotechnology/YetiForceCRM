@@ -9,7 +9,7 @@
  * @package Integration
  *
  * @copyright YetiForce S.A.
- * @license   YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license   YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  * @author    Mariusz Krzaczkowski <m.krzaczkowski@yetiforce.com>
  */
 
@@ -56,7 +56,11 @@ class Calendar
 	 * @var string[]
 	 */
 	protected static $customValues = [
+		'X-GOOGLE-CONFERENCE' => 'meeting_url',
+		'X-MS-OLK-MWSURL' => 'meeting_url',
 		'X-MICROSOFT-SKYPETEAMSMEETINGURL' => 'meeting_url',
+		'X-MICROSOFT-ONLINEMEETINGCONFLINK' => 'meeting_url',
+		'X-MICROSOFT-ONLINEMEETINGEXTERNALLINK' => 'meeting_url',
 	];
 	/**
 	 * Max date.

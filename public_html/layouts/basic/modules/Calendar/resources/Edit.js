@@ -166,7 +166,8 @@ Vtiger_Edit_Js(
 				container.find('.js-autofill').trigger('change');
 				if (start > end) {
 					end = start;
-					endDateElement.val(moment(end).format(dateFormat)).datepicker('update');
+					endDateElement.val(moment(end).format(dateFormat));
+					App.Fields.Date.register(container);
 				}
 			});
 			container.find('input[name="time_start"]').on('focus', function (e) {
@@ -412,7 +413,6 @@ Vtiger_Edit_Js(
 			this.registerInviteEvent(container);
 			this.registerAddInvitation(container);
 			this.registerFormSubmitEvent(container);
-			this.registerReminderFieldCheckBox();
 		},
 		toggleTimesInputs: function (container) {
 			container.find(':checkbox').on('change', function () {
@@ -591,6 +591,7 @@ Vtiger_Edit_Js(
 			if (!this.proceedRegisterEvents()) {
 				return;
 			}
+			this.registerReminderFieldCheckBox();
 			this.registerRecurrenceFieldCheckBox();
 			this.registerRecurringTypeChangeEvent();
 			this._super();

@@ -1,4 +1,4 @@
-{*<!-- {[The file is published on the basis of YetiForce Public License 5.0 that can be found in the following directory: licenses/LicenseEN.txt or yetiforce.com]} -->*}
+{*<!-- {[The file is published on the basis of YetiForce Public License 6.5 that can be found in the following directory: licenses/LicenseEN.txt or yetiforce.com]} -->*}
 {strip}
 	<div class="tpl-Users-RecordPopover">
 		<h5 class="c-popover--link__header px-2 pt-1 bg-light">
@@ -19,9 +19,8 @@
 		<div class="c-popover--link__body px-2 pb-1">
 			{foreach item=FIELD_MODEL key=FIELD_NAME from=$FIELDS}
 				<div class="u-white-space-nowrap u-text-ellipsis--no-hover">
-					{assign var=ICON value=$FIELD_MODEL->getIcon('RecordPopover')}
-					{if isset($ICON['name'])}
-						<span class="{$ICON['name']} mr-1"></span>
+					{assign var=ICON value=$FIELD_MODEL->get('icon')}
+					{if $ICON}{\App\Layout\Media::getImageHtml($ICON)}
 					{else if $FIELD_MODEL->isReferenceField() || isset($FIELDS_ICON[$FIELD_NAME])}
 						<span class="mr-1 {if $FIELD_MODEL->isReferenceField()}yfm-{\App\Record::getType($RECORD->get($FIELD_NAME))}{else}{$FIELDS_ICON[$FIELD_NAME]}{/if}"></span>
 					{/if}

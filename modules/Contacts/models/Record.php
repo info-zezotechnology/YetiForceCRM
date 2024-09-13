@@ -18,8 +18,8 @@ class Contacts_Record_Model extends Vtiger_Record_Model
 	public function getRecordRelatedListViewLinksLeftSide(Vtiger_RelationListView_Model $viewModel)
 	{
 		$links = parent::getRecordRelatedListViewLinksLeftSide($viewModel);
-		if (\Config\Main::$isActiveSendingMails) {
-			if ('InternalClient' === \App\Mail::getMailComposer()) {
+		if (\App\Mail::checkMailClient()) {
+			if (\App\Mail::checkInternalMailClient()) {
 				$links['LBL_SEND_EMAIL'] = Vtiger_Link_Model::getInstanceFromValues([
 					'linklabel' => 'LBL_SEND_EMAIL',
 					'linkhref' => true,
@@ -62,7 +62,7 @@ class Contacts_Record_Model extends Vtiger_Record_Model
 
 				$recordModel = Vtiger_Record_Model::getCleanInstance($this->getModuleName());
 				$recordModel->setId($competitionId);
-				$hierarchy['entries'][$competitionId][0] = $dashes[0] . '<a href=' . $recordModel->getDetailViewUrl() . '>' . $name[2] .
+				$hierarchy['entries'][$competitionId][0] = ($dashes[0] ?? '') . '<a href=' . $recordModel->getDetailViewUrl() . '>' . $name[2] .
 					'</a>';
 			}
 		}

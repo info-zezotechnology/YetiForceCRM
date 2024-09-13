@@ -1,4 +1,4 @@
-{*<!-- {[The file is published on the basis of YetiForce Public License 5.0 that can be found in the following directory: licenses/LicenseEN.txt or yetiforce.com]} -->*}
+{*<!-- {[The file is published on the basis of YetiForce Public License 6.5 that can be found in the following directory: licenses/LicenseEN.txt or yetiforce.com]} -->*}
 {strip}
 	<!-- tpl-Settings-CronTasks-ListViewHeader -->
 	<div class="">
@@ -8,7 +8,7 @@
 			</div>
 			<div class="col-md-6 d-flex justify-content-end align-items-center ml-2 ml-md-0">
 				<div class="mr-3">
-					<a href="https://yetiforce.com/en/knowledge-base/documentation/administrator-documentation/item/enable-cron" target="_blank" class="btn btn-outline-info js-popover-tooltip" data-content="{App\Language::translate('BTM_GOTO_YETIFORCE_DOCUMENTATION')}" rel="noreferrer noopener" data-js="popover">
+					<a href="https://doc.yetiforce.com/administrator-guides/automation/cron/" target="_blank" class="btn btn-outline-info js-popover-tooltip" data-content="{App\Language::translate('BTM_GOTO_YETIFORCE_DOCUMENTATION')}" rel="noreferrer noopener" data-js="popover">
 						<span class="mdi mdi-book-open-page-variant u-fs-lg"></span>
 					</a>
 				</div>

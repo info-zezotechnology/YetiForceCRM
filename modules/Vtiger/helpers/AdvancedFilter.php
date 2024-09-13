@@ -4,7 +4,7 @@
  * Advanced Filter Class.
  *
  * @copyright YetiForce S.A.
- * @license   YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license   YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  * @author    Mariusz Krzaczkowski <m.krzaczkowski@yetiforce.com>
  * @author    Radosław Skrzypczak <r.skrzypczak@yetiforce.com>
  */
@@ -118,9 +118,7 @@ class Vtiger_AdvancedFilter_Helper
 			'serverAccess' => ['is', 'is not', 'has changed', 'not has changed'],
 			'multiDomain' => ['is', 'contains', 'does not contain', 'starts with', 'ends with', 'has changed', 'not has changed', 'is empty', 'is not empty'],
 			'currencyInventory' => ['equal to', 'less than', 'greater than', 'does not equal', 'less than or equal to', 'greater than or equal to', 'has changed', 'not has changed'],
-			'country' => ['is', 'is not', 'is empty', 'is not empty'],
-			'group' => ['is', 'is not', 'is empty', 'is not empty'],
-			'totalTime' => ['equal to', 'less than', 'greater than', 'does not equal', 'less than or equal to', 'greater than or equal to', 'has changed', 'not has changed'],
+			'country' => ['is', 'is not', 'is empty', 'is not empty']
 		];
 	}
 

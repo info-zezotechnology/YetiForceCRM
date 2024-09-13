@@ -1,4 +1,4 @@
-{*<!-- {[The file is published on the basis of YetiForce Public License 5.0 that can be found in the following directory: licenses/LicenseEN.txt or yetiforce.com]} -->*}
+{*<!-- {[The file is published on the basis of YetiForce Public License 6.5 that can be found in the following directory: licenses/LicenseEN.txt or yetiforce.com]} -->*}
 {strip}
 	<!-- tpl-Base-Detail-Widget-BlockView -->
 	{foreach key=BLOCK_LABEL_KEY item=FIELD_MODEL_LIST from=$RECORD_STRUCTURE}
@@ -34,8 +34,8 @@
 								<div class="col-5 fieldLabel {$WIDTHTYPE} d-flex align-items-center" id="{$MODULE_NAME}_detailView_fieldLabel_{$FIELD_MODEL->getName()}">
 									{assign var=HELPINFO_LABEL value=\App\Language::getTranslateHelpInfo($FIELD_MODEL, $VIEW)}
 									<label class="font-weight-bold mb-0">
-										{assign var=ICON value=$FIELD_MODEL->getIcon('Detail')}
-										{if isset($ICON['name'])}<span class="{$ICON['name']} mr-1"></span>{/if}
+										{assign var=ICON value=$FIELD_MODEL->get('icon')}
+										{if $ICON}{\App\Layout\Media::getImageHtml($ICON)}{/if}
 										{\App\Language::translate({$FIELD_MODEL->getFieldLabel()},{$MODULE_NAME})}
 										{if $HELPINFO_LABEL}
 											<a href="#" class="js-help-info float-right u-cursor-pointer"

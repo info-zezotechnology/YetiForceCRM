@@ -6,7 +6,7 @@
  * @package   Model
  *
  * @copyright YetiForce S.A.
- * @license   YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license   YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  * @author    Radosław Skrzypczak <r.skrzypczak@yetiforce.com>
  */
 class Partners_Record_Model extends Vtiger_Record_Model
@@ -28,7 +28,7 @@ class Partners_Record_Model extends Vtiger_Record_Model
 
 				$recordModel = Vtiger_Record_Model::getCleanInstance($this->getModuleName());
 				$recordModel->setId($id);
-				$hierarchy['entries'][$id][0] = $dashes[0] . '<a href=' . $recordModel->getDetailViewUrl() . '>' . $name[2] . '</a>';
+				$hierarchy['entries'][$id][0] = ($dashes[0] ?? '') . '<a href=' . $recordModel->getDetailViewUrl() . '>' . $name[2] . '</a>';
 			}
 		}
 		return $hierarchy;

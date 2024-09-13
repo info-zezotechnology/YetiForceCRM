@@ -254,9 +254,9 @@ class Vtiger_DetailView_Model extends \App\Base
 					'linklabel' => 'LBL_ACTIVATE_RECORD',
 					'title' => \App\Language::translate('LBL_ACTIVATE_RECORD'),
 					'dataUrl' => 'index.php?module=' . $recordModel->getModuleName() . '&action=State&state=Active&record=' . $recordModel->getId(),
-					'linkdata' => ['confirm' => \App\Language::translate('LBL_ACTIVATE_RECORD_DESC')],
+					'linkdata' => ['confirm' => \App\Language::translate('LBL_ACTIVATE_RECORD_DESC'), 'source-view' => 'Href'],
 					'linkicon' => 'fas fa-undo-alt',
-					'linkclass' => 'entityStateBtn btn-outline-dark btn-sm js-record-action',
+					'linkclass' => 'entityStateBtn btn-outline-dark btn-sm js-action-confirm',
 					'style' => empty($stateColors['Active']) ? '' : "background: {$stateColors['Active']};",
 				]);
 			}
@@ -266,9 +266,9 @@ class Vtiger_DetailView_Model extends \App\Base
 					'linklabel' => 'LBL_ARCHIVE_RECORD',
 					'title' => \App\Language::translate('LBL_ARCHIVE_RECORD'),
 					'dataUrl' => 'index.php?module=' . $recordModel->getModuleName() . '&action=State&state=Archived&record=' . $recordModel->getId(),
-					'linkdata' => ['confirm' => \App\Language::translate('LBL_ARCHIVE_RECORD_DESC')],
+					'linkdata' => ['confirm' => \App\Language::translate('LBL_ARCHIVE_RECORD_DESC'), 'source-view' => 'Href'],
 					'linkicon' => 'fas fa-archive',
-					'linkclass' => 'entityStateBtn btn-outline-dark btn-sm js-record-action',
+					'linkclass' => 'entityStateBtn btn-outline-dark btn-sm js-action-confirm',
 					'style' => empty($stateColors['Archived']) ? '' : "background: {$stateColors['Archived']};",
 				]);
 			}
@@ -278,9 +278,9 @@ class Vtiger_DetailView_Model extends \App\Base
 					'linklabel' => 'LBL_MOVE_TO_TRASH',
 					'title' => \App\Language::translate('LBL_MOVE_TO_TRASH'),
 					'dataUrl' => 'index.php?module=' . $recordModel->getModuleName() . '&action=State&state=Trash&record=' . $recordModel->getId(),
-					'linkdata' => ['confirm' => \App\Language::translate('LBL_MOVE_TO_TRASH_DESC')],
+					'linkdata' => ['confirm' => \App\Language::translate('LBL_MOVE_TO_TRASH_DESC'), 'source-view' => 'Href'],
 					'linkicon' => 'fas fa-trash-alt',
-					'linkclass' => 'entityStateBtn btn-outline-dark btn-sm js-record-action',
+					'linkclass' => 'entityStateBtn btn-outline-dark btn-sm js-action-confirm',
 					'style' => empty($stateColors['Trash']) ? '' : "background: {$stateColors['Trash']};",
 				]);
 			}
@@ -290,9 +290,9 @@ class Vtiger_DetailView_Model extends \App\Base
 					'linklabel' => 'LBL_DELETE_RECORD_COMPLETELY',
 					'title' => \App\Language::translate('LBL_DELETE_RECORD_COMPLETELY'),
 					'dataUrl' => 'index.php?module=' . $recordModel->getModuleName() . '&action=Delete&record=' . $recordModel->getId(),
-					'linkdata' => ['confirm' => \App\Language::translate('LBL_DELETE_RECORD_COMPLETELY_DESC')],
+					'linkdata' => ['confirm' => \App\Language::translate('LBL_DELETE_RECORD_COMPLETELY_DESC'), 'source-view' => 'Href'],
 					'linkicon' => 'fas fa-eraser',
-					'linkclass' => 'btn-dark btn-sm js-record-action',
+					'linkclass' => 'btn-dark btn-sm js-action-confirm',
 				]);
 			}
 			if ($moduleModel->isPermitted('DuplicateRecord')) {

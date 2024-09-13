@@ -9,7 +9,7 @@
  * @package App
  *
  * @copyright YetiForce S.A.
- * @license   YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license   YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  * @author    Adrian Kon <a.kon@yetiforce.com>
  * @author    Mariusz Krzaczkowski <m.krzaczkowski@yetiforce.com>
  */
@@ -38,49 +38,6 @@ class Gus extends Base
 
 	/** {@inheritdoc} */
 	public $docUrl = 'https://api.stat.gov.pl/Home/RegonApi';
-
-	/** {@inheritdoc} */
-	protected $fields = [
-		'vatId' => [
-			'labelModule' => '_Base',
-			'label' => 'Vat ID',
-		],
-		'ncr' => [
-			'labelModule' => '_Base',
-			'label' => 'Registration number 1',
-		],
-		'taxNumber' => [
-			'labelModule' => '_Base',
-			'label' => 'Registration number 2',
-		],
-	];
-
-	/** {@inheritdoc} */
-	protected $modulesFieldsMap = [
-		'Accounts' => [
-			'vatId' => 'vat_id',
-			'taxNumber' => 'registration_number_2',
-			'ncr' => 'registration_number_1',
-		],
-		'Leads' => [
-			'vatId' => 'vat_id',
-			'taxNumber' => 'registration_number_2',
-			'ncr' => 'registration_number_1',
-		],
-		'Vendors' => [
-			'vatId' => 'vat_id',
-			'taxNumber' => 'registration_number_2',
-			'ncr' => 'registration_number_1',
-		],
-		'Competition' => [
-			'vatId' => 'vat_id',
-			'taxNumber' => 'registration_number_2',
-			'ncr' => 'registration_number_1',
-		],
-		'Partners' => [
-			'vatId' => 'vat_id',
-		],
-	];
 
 	/** {@inheritdoc} */
 	public $formFieldsToRecordMap = [
@@ -165,6 +122,52 @@ class Gus extends Base
 	];
 
 	/** {@inheritdoc} */
+	protected $fields = [
+		'vatId' => [
+			'labelModule' => '_Base',
+			'label' => 'Vat ID',
+		],
+		'ncr' => [
+			'labelModule' => '_Base',
+			'label' => 'Registration number 1',
+		],
+		'taxNumber' => [
+			'labelModule' => '_Base',
+			'label' => 'Registration number 2',
+		],
+	];
+
+	/** {@inheritdoc} */
+	protected string $addOnName = 'YetiForcePlGus';
+
+	/** {@inheritdoc} */
+	protected $modulesFieldsMap = [
+		'Accounts' => [
+			'vatId' => 'vat_id',
+			'taxNumber' => 'registration_number_2',
+			'ncr' => 'registration_number_1',
+		],
+		'Leads' => [
+			'vatId' => 'vat_id',
+			'taxNumber' => 'registration_number_2',
+			'ncr' => 'registration_number_1',
+		],
+		'Vendors' => [
+			'vatId' => 'vat_id',
+			'taxNumber' => 'registration_number_2',
+			'ncr' => 'registration_number_1',
+		],
+		'Competition' => [
+			'vatId' => 'vat_id',
+			'taxNumber' => 'registration_number_2',
+			'ncr' => 'registration_number_1',
+		],
+		'Partners' => [
+			'vatId' => 'vat_id',
+		],
+	];
+
+	/** {@inheritdoc} */
 	public function search(): array
 	{
 		if (!$this->isActive()) {
@@ -178,8 +181,13 @@ class Gus extends Base
 		$client = \App\RecordCollectors\Helper\GusClient::getInstance($this->getClientParams($moduleName));
 		try {
 			$infoFromGus = $client->search($vatId, $ncr, $taxNumber);
-			$response['recordModel'] = $this->getRecordModel();
-			$fieldsModel = $response['recordModel']->getModule()->getFields();
+			if ($recordId = $this->request->getInteger('record')) {
+				$recordModel = \Vtiger_Record_Model::getInstanceById($recordId, $moduleName);
+				$response['recordModel'] = $recordModel;
+				$fieldsModel = $recordModel->getModule()->getFields();
+			} else {
+				$fieldsModel = \Vtiger_Module_Model::getInstance($moduleName)->getFields();
+			}
 			if ($infoFromGus && isset($this->formFieldsToRecordMap[$moduleName])) {
 				$additional = $fieldsData = $skip = $dataCounter = [];
 				foreach ($infoFromGus as $key => &$row) {

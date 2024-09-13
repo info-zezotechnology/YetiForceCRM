@@ -5,7 +5,7 @@
  * @package Model
  *
  * @copyright YetiForce S.A.
- * @license   YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license   YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  * @author    Tomasz Kur <t.kur@yetiforce.com>
  * @author    Radosław Skrzypczak <r.skrzypczak@yetiforce.com>
  */
@@ -738,19 +738,7 @@ class Vtiger_ChartFilter_Model extends \App\Base
 			$queryGenerator = new \App\QueryGenerator($this->getTargetModule());
 			$queryGenerator->initForCustomViewById($filter);
 		}
-		$queryGenerator->setFields(['id']);
-		if (empty($queryGenerator->getDistinct())) {
-			$queryGenerator->setCustomColumn([
-				'count' => new \yii\db\Expression('COUNT(1)'),
-				'id' => new \yii\db\Expression('MAX(' . $queryGenerator->getColumnName('id') . ')')
-			]);
-		} else {
-			$queryGenerator->setDistinct(null);
-			$queryGenerator->setCustomColumn([
-				'count' => new \yii\db\Expression('COUNT(DISTINCT ' . $queryGenerator->getColumnName('id') . ')'),
-				'id' => new \yii\db\Expression('MAX(' . $queryGenerator->getColumnName('id') . ')')
-			]);
-		}
+		$queryGenerator->setFields(['id'])->setCustomColumn(['count' => new \yii\db\Expression('COUNT(1)'), 'id' => new \yii\db\Expression('MAX(' . $queryGenerator->getColumnName('id') . ')')]);
 		foreach ([$this->groupName => $this->groupColumnName, $this->dividingName => $this->dividingColumnName] as $columnName => $groupBy) {
 			if (!empty($columnName) && $columnName !== $groupBy) {
 				$sqlColumnName = $queryGenerator->getColumnName($columnName);
@@ -971,7 +959,6 @@ class Vtiger_ChartFilter_Model extends \App\Base
 	 */
 	protected function getRowsDb($query, $dividingValue)
 	{
-		file_put_contents(__FILE__ . '.log', print_r([$query->createCommand()->getRawSql()], true), FILE_APPEND);
 		$dataReader = $query->createCommand()->query();
 		while ($row = $dataReader->read()) {
 			[$groupValue, $dividingValue] = $this->getFieldValuesFromRow($row, $dividingValue);
@@ -1114,10 +1101,14 @@ class Vtiger_ChartFilter_Model extends \App\Base
 		$operator = 'e';
 		$fieldDataType = $fieldModel->getFieldDataType();
 		if ($fieldModel->isReferenceField()) {
-			$operator = 'eid';
+			$operator = 'a';
 		} elseif (\in_array($fieldDataType, ['multipicklist', 'categoryMultipicklist'])) {
 			$operator = 'c';
 			$value = 'multipicklist' === $fieldDataType ? str_replace(' |##| ', '##', $value) : $value;
+		} elseif ('date' === $fieldDataType) {
+			$value = App\Fields\Date::formatToDisplay($value);
+		} elseif ('datetime' === $fieldDataType) {
+			$value = App\Fields\DateTime::formatToDisplay($value);
 		}
 		return [$fieldModel->getName(), $operator, $value];
 	}

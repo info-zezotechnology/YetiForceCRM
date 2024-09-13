@@ -1,4 +1,4 @@
-/* {[The file is published on the basis of YetiForce Public License 5.0 that can be found in the following directory: licenses/LicenseEN.txt or yetiforce.com]} */
+/* {[The file is published on the basis of YetiForce Public License 6.5 that can be found in the following directory: licenses/LicenseEN.txt or yetiforce.com]} */
 'use strict';
 /**
  *  Class representing an extended calendar.
@@ -148,7 +148,6 @@ window.Calendar_Calendar_Js = class Calendar_Calendar_Js extends Vtiger_Calendar
 	registerEditForm(sideBar) {
 		const editViewInstance = Vtiger_Edit_Js.getInstanceByModuleName(sideBar.find('[name="module"]').val());
 		let rightFormCreate = sideBar.find('form.js-form');
-		editViewInstance.setForm(rightFormCreate);
 		editViewInstance.registerBasicEvents(rightFormCreate);
 		rightFormCreate.validationEngine(app.validationEngineOptions);
 		App.Fields.Picklist.showSelect2ElementView(sideBar.find('select'));

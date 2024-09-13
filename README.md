@@ -1,3 +1,15 @@
+
+# We've moved!
+
+ Hi! This repository is no longer being used and has been archived for historical purposes.
+
+ - 🐞 **Bugs**: Reports of bugs can be filed against our new repo [YetiForce/issues](https://github.com/YetiForceCompany/YetiForce/issues).
+ - ⭐ **Feature request**: Add your request or discuss the project w/the community at [YetiForce/discussions](https://github.com/YetiForceCompany/YetiForce/discussions).
+
+ For more information on the move, see our comment about [this transition](https://github.com/YetiForceCompany/YetiForce/discussions/27).
+ 
+ We look forward to seeing you in our new spaces!
+#
 ![awards_all_eng_new](https://user-images.githubusercontent.com/10197525/47670510-aa6e9880-dbad-11e8-9720-be7f34dba9e1.jpg)
 
 [![Unit tests](https://github.com/YetiForceCompany/YetiForceCRM/actions/workflows/tests.yml/badge.svg?branch=developer)](https://github.com/YetiForceCompany/YetiForceCRM/actions/workflows/tests.yml)
@@ -17,7 +29,6 @@
 [![Depfu](https://badges.depfu.com/badges/56870798a59eff717ff60bc775ca6a33/overview.svg)](https://depfu.com/github/YetiForceCompany/YetiForceCRM?project_id=5174)
 [![SecurityHeaders.io](https://img.shields.io/security-headers?url=https%3A%2F%2Fgitdeveloper.yetiforce.com)](https://securityheaders.io/?q=https://gitdeveloper.yetiforce.com)
 [![mozilla-observatory](https://img.shields.io/mozilla-observatory/grade/gitdeveloper.yetiforce.com?publish)](https://observatory.mozilla.org/analyze/gitdeveloper.yetiforce.com)
-[![Docker Hub](https://img.shields.io/badge/docker-ready-blue.svg)](https://registry.hub.docker.com/r/yetiforce/yetiforcecrm/)
 [![Dependency Vulnerabilities](https://img.shields.io/endpoint?url=https%3A%2F%2Fapi-hooks.soos.io%2Fapi%2Fshieldsio-badges%3FbadgeType%3DDependencyVulnerabilities%26pid%3D3fd2seq3i)](https://app.soos.io)
 
 <img src="https://stats.yetiforce.com/matomo.php?idsite=4&amp;rec=1" style="border:0" alt="" />
@@ -62,11 +73,11 @@ We design an innovative CRM system that is dedicated to large and medium-sized c
 
 ## 📖 Read the documentation to learn more.
 
-#### :computer: Requirements: [Web server requirements](https://yetiforce.com/en/knowledge-base/documentation/implementer-documentation/item/web-server-requirements)
+#### :computer: Requirements: [Web server requirements](https://doc.yetiforce.com/introduction/requirements/)
 
 #### :video_camera: Video Tutorials: [Video Tutorials on YouTube](https://www.youtube.com/playlist?list=PLX0lktP3Kukg_Da-TaEBys-aON68Yy2vh) , [Video Tutorials on our server](https://public.yetiforce.com/Tutorials/)
 
-#### :blue_book: Knowledge base: [yetiforce.com/en/knowledge-base/documentation](https://yetiforce.com/en/knowledge-base/documentation)
+#### :blue_book: Knowledge base: [doc.yetiforce.com](https://doc.yetiforce.com/)
 
 #### :pencil: Code Documentation: [doc.yetiforce.com/code/](https://doc.yetiforce.com/code/)
 
@@ -84,9 +95,9 @@ Follow us on [Twitter](https://twitter.com/YetiForceEN) or like on [FaceBook](ht
 - [Development version](https://download.yetiforce.com/crm-developer.zip) - full package (yarn + composer)
 - [Docker](tests/setup/docker.md) - docker container, for development purposes only
 
-1. Requirements [Web server requirements](https://yetiforce.com/en/knowledge-base/documentation/implementer-documentation/item/web-server-requirements)
-2. Installation [our website](https://yetiforce.com/en/knowledge-base/documentation/implementer-documentation/item/how-to-install-crm-system)
-3. The lists of changes for previous versions of YetiForce CRM are available at [our website](https://yetiforce.com/en/knowledge-base/documentation/developer-documentation/category/changes-2).
+1. Requirements [Web server requirements](https://doc.yetiforce.com/introduction/requirements/)
+2. Installation [our website](https://doc.yetiforce.com/introduction/installation-manual)
+3. The lists of changes for previous versions of YetiForce CRM are available at [our website](https://doc.yetiforce.com/introduction/release-notes-changelog).
 4. Check Milestone to verify release due date
    https://github.com/YetiForceCompany/YetiForceCRM/milestones
 5. Update PKG link.
@@ -96,7 +107,7 @@ Follow us on [Twitter](https://twitter.com/YetiForceEN) or like on [FaceBook](ht
 7. Languages package
    https://github.com/YetiForceCompany/YetiForceCRMLanguages
 
-YetiForce CRM was orginally forked from Vtiger CRM and has mechanisms that allow to easily migrate from Vtiger to YetiForce.
+YetiForce CRM was originally forked from Vtiger CRM and has mechanisms that allow to easily migrate from Vtiger to YetiForce.
 
 Testing Supported By<br/>
 <a href="http://browserstack.com">

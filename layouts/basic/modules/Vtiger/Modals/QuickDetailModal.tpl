@@ -1,4 +1,4 @@
-{*<!-- {[The file is published on the basis of YetiForce Public License 5.0 that can be found in the following directory: licenses/LicenseEN.txt or yetiforce.com]} -->*}
+{*<!-- {[The file is published on the basis of YetiForce Public License 6.5 that can be found in the following directory: licenses/LicenseEN.txt or yetiforce.com]} -->*}
 {strip}
 	<div class="tpl-Base-Modals-QuickDetailModal modal js-modal-data {if $LOCK_EXIT}static{/if}" tabindex="-1" data-js="data"
 		role="dialog" {foreach from=$MODAL_VIEW->modalData key=KEY item=VALUE} data-{$KEY}="{$VALUE}" {/foreach}>
@@ -82,8 +82,6 @@
 											<div>{$WIDGET['content']}</div>
 										{/if}
 									</div>
-								{foreachelse}
-									{include file=\App\Layout::getTemplatePath('Detail/BlocksView.tpl', $MODULE_NAME)}
 								{/foreach}
 							</div>
 						</div>

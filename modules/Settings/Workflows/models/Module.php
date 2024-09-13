@@ -69,9 +69,9 @@ class Settings_Workflows_Module_Model extends Settings_Vtiger_Module_Model
 	/**
 	 * Workflow triggers list.
 	 *
-	 * @var string[]
+	 * @var array
 	 */
-	public const TRIGGER_TYPES = [
+	public static $triggerTypes = [
 		1 => 'ON_FIRST_SAVE',
 		4 => 'ON_MODIFY',
 		3 => 'ON_EVERY_SAVE',
@@ -82,7 +82,6 @@ class Settings_Workflows_Module_Model extends Settings_Vtiger_Module_Model
 		8 => 'TRIGGER',
 		9 => 'BLOCK_EDIT',
 		//10 => 'ON_RELATED',
-		VTWorkflowManager::TOKEN_LINK => 'TOKEN_LINK',
 	];
 
 	/**
@@ -140,6 +139,16 @@ class Settings_Workflows_Module_Model extends Settings_Vtiger_Module_Model
 			}
 		}
 		return $supportedModuleModels;
+	}
+
+	/**
+	 * Get supported triggers list.
+	 *
+	 * @return array
+	 */
+	public static function getTriggerTypes()
+	{
+		return self::$triggerTypes;
 	}
 
 	/**

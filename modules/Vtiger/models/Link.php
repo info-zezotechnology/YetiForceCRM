@@ -107,15 +107,31 @@ class Vtiger_Link_Model extends vtlib\Link
 	}
 
 	/**
+	 * Function to check whether link has icon or not.
+	 *
+	 * @return bool true/false
+	 */
+	public function isIconExists()
+	{
+		$linkIcon = $this->getIcon();
+		if (empty($linkIcon)) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
 	 * Function to retrieve the icon path for the link icon.
 	 *
-	 * @return string|bool - returns image path if icon exits
-	 *                     else returns false;
+	 * @return <String/Boolean> - returns image path if icon exits
+	 *                          else returns false;
 	 */
 	public function getIconPath()
 	{
-		$imgPath = $this->getIcon();
-		return $imgPath && !\App\Validator::fontIcon($imgPath) ? Vtiger_Theme::getImagePath($imgPath) : '';
+		if (!$this->isIconExists()) {
+			return false;
+		}
+		return Vtiger_Theme::getImagePath($this->getIcon());
 	}
 
 	/**
@@ -395,16 +411,5 @@ class Vtiger_Link_Model extends vtlib\Link
 			$relatedModuleName = $this->relatedModuleName;
 		}
 		return $relatedModuleName;
-	}
-
-	/**
-	 * Get module name.
-	 *
-	 * @return string
-	 */
-	public function getModuleName(): string
-	{
-		$tabId = $this->get('tabid') ?? 0;
-		return \App\Module::getModuleName($tabId) ?: '_Base';
 	}
 }

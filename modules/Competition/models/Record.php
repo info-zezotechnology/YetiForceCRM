@@ -4,7 +4,7 @@
  * Record Class for Competition.
  *
  * @copyright YetiForce S.A.
- * @license   YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license   YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  * @author    Michał Lorencik <m.lorencik@yetiforce.com>
  */
 class Competition_Record_Model extends Vtiger_Record_Model
@@ -26,7 +26,7 @@ class Competition_Record_Model extends Vtiger_Record_Model
 
 				$recordModel = Vtiger_Record_Model::getCleanInstance('Competition');
 				$recordModel->setId($competitionId);
-				$hierarchy['entries'][$competitionId][0] = $dashes[0] . '<a href=' . $recordModel->getDetailViewUrl() . '>' . $name[2] .
+				$hierarchy['entries'][$competitionId][0] = ($dashes[0] ?? '') . '<a href=' . $recordModel->getDetailViewUrl() . '>' . $name[2] .
 					'</a>';
 			}
 		}

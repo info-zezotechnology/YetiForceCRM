@@ -6,7 +6,7 @@
  * @package Settings.Model
  *
  * @copyright YetiForce S.A.
- * @license YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  */
 class Settings_ApiAddress_Module_Model extends Settings_Vtiger_Module_Model
 {
@@ -59,6 +59,7 @@ class Settings_ApiAddress_Module_Model extends Settings_Vtiger_Module_Model
 				$result = $db->createCommand()->insert($this->baseTable, ['val' => $val, 'type' => $type, 'name' => $key])->execute();
 			}
 		}
+		\App\Cache::delete('AddressFinder', 'Config');
 
 		return (bool) $result;
 	}

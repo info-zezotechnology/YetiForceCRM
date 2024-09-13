@@ -6,7 +6,7 @@
  * @package   View
  *
  * @copyright YetiForce S.A.
- * @license   YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license   YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  * @author    Radosław Skrzypczak <r.skrzypczak@yetiforce.com>
  * @author    Mariusz Krzaczkowski <m.krzaczkowski@yetiforce.com>
  * @author    Arkadiusz Adach <a.adach@yetiforce.com>
@@ -39,7 +39,6 @@ class Calendar_ActivityStateModal_View extends Vtiger_BasicModal_View
 		$viewer = $this->getViewer($request);
 		$viewer->assign('LINKS', $this->getLinks());
 		$viewer->assign('RECORD', $this->record);
-		$viewer->assign('TIME_POSTPONE', \App\Config::module('Calendar', 'timePostponeIntervals', []));
 		$viewer->assign('SCRIPTS', $this->getScripts($request));
 		$viewer->view($this->getTpl(), $moduleName);
 	}

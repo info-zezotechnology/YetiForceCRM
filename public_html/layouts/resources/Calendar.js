@@ -1,4 +1,4 @@
-/* {[The file is published on the basis of YetiForce Public License 5.0 that can be found in the following directory: licenses/LicenseEN.txt or yetiforce.com]} */
+/* {[The file is published on the basis of YetiForce Public License 6.5 that can be found in the following directory: licenses/LicenseEN.txt or yetiforce.com]} */
 'use strict';
 
 /** Class representing a calendar. */
@@ -218,22 +218,22 @@ window.Calendar_Js = class {
 				},
 				dayGridMonth: {
 					titleFormat: (args) => {
-						return this.formatDate(args.date, 'month');
+						return this.formatDate(args.date, args.end, 'month');
 					}
 				},
 				timeGridWeek: {
 					titleFormat: (args) => {
-						return this.formatDate(args.date, 'week');
+						return this.formatDate(args.date, args.end, 'week');
 					}
 				},
 				timeGridDay: {
 					titleFormat: (args) => {
-						return this.formatDate(args.date, 'day');
+						return this.formatDate(args.date, args.end, 'day');
 					}
 				},
 				listWeek: {
 					titleFormat: (args) => {
-						return this.formatDate(args.date, 'week');
+						return this.formatDate(args.date, args.end, 'week');
 					},
 					dayHeaderContent: (arg) => {
 						return {
@@ -306,9 +306,9 @@ window.Calendar_Js = class {
 	 * @returns {{module: string, action: string, mode: string, start: string, end: string, user: *, cvid: int, emptyFilters: boolean}}
 	 */
 	getDefaultParams() {
-		let users = app.moduleCacheGet('calendar-users') || CONFIG.userId,
-			sideBar = this.getSidebarView(),
-			filters = [],
+		const users = app.moduleCacheGet('calendar-users') || CONFIG.userId,
+			sideBar = this.getSidebarView();
+		let filters = [],
 			params = {
 				module: this.module ? this.module : CONFIG.module,
 				action: 'Calendar',
@@ -368,26 +368,43 @@ window.Calendar_Js = class {
 	}
 	/**
 	 * Converts the date format.
-	 * @param {object} date
+	 * @param {object} startDate
+	 * @param {object} endDate
 	 * @param {string} type
 	 * @returns {string}
 	 */
-	formatDate(date, type) {
+	formatDate(startDate, endDate, type) {
 		switch (type) {
 			case 'month':
 				return Calendar_Js.monthFormat[CONFIG.dateFormat]
-					.replace('YYYY', date['year'])
-					.replace('MMMM', App.Fields.Date.fullMonthsTranslated[date['month']]);
+					.replace('YYYY', startDate['year'])
+					.replace('MMMM', App.Fields.Date.fullMonthsTranslated[startDate['month']]);
 			case 'week':
-				return CONFIG.dateFormat
-					.replace('yyyy', date['year'])
-					.replace('mm', App.Fields.Date.monthsTranslated[date['month']])
-					.replace('dd', date['day'] + ' - ' + (date['day'] + 7));
+				let weekRange = '';
+				let endMonth = '';
+				let startDay = startDate['day'];
+				let endYear = startDate['year'];
+				if (startDate['month'] !== endDate['month']) {
+					endMonth = App.Fields.Date.monthsTranslated[endDate['month']];
+				}
+				if (startDate['year'] !== endDate['year']) {
+					startDay = startDate['day'] + ', ' + startDate['year'];
+					endYear = endDate['year'];
+				}
+				weekRange = [
+					App.Fields.Date.monthsTranslated[startDate['month']],
+					startDay,
+					'-',
+					endMonth,
+					endDate['day'] + ',',
+					endYear
+				].join(' ');
+				return weekRange;
 			case 'day':
 				return CONFIG.dateFormat
-					.replace('yyyy', date['year'])
-					.replace('mm', App.Fields.Date.monthsTranslated[date['month']])
-					.replace('dd', date['day']);
+					.replace('yyyy', startDate['year'])
+					.replace('mm', App.Fields.Date.monthsTranslated[startDate['month']])
+					.replace('dd', startDate['day']);
 		}
 	}
 	/**
@@ -519,23 +536,21 @@ window.Calendar_Js = class {
 	 * Register filters
 	 */
 	registerFilters() {
-		let sideBar = this.getSidebarView();
+		const self = this;
+		let sideBar = self.getSidebarView();
 		if (!sideBar || sideBar.length <= 0) {
 			return;
 		}
 		sideBar.find('.js-sidebar-filter-container').each((_, row) => {
 			let formContainer = $(row);
-			this.registerUsersChange(formContainer);
+			self.registerUsersChange(formContainer);
 			App.Fields.Picklist.showSelect2ElementView(formContainer.find('select'));
-			let body = formContainer.find('.js-sidebar-filter-body');
-			if (body.length) {
-				app.showNewScrollbar(body, {
-					suppressScrollX: true
-				});
-			}
-			this.registerFilterForm(formContainer);
+			app.showNewScrollbar(formContainer, {
+				suppressScrollX: true
+			});
+			self.registerFilterForm(formContainer);
 		});
-		this.registerSelectAll(sideBar);
+		self.registerSelectAll(sideBar);
 		if (app.moduleCacheGet('CurrentCvId') !== null) {
 			this.container
 				.find('.js-calendar__extended-filter-tab [data-cvid="' + app.moduleCacheGet('CurrentCvId') + '"] a')

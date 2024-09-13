@@ -5,7 +5,7 @@
  * @package   Settings.Action
  *
  * @copyright YetiForce S.A.
- * @license   YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license   YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  */
 /**
  * Record numbering basic action class.
@@ -76,9 +76,9 @@ class Settings_RecordNumbering_SaveAjax_Action extends Settings_Vtiger_Index_Act
 		$picklistValues = $request->getArray('sequenceNumber', 'Integer');
 		if (!empty($moduleId) && !empty($picklistValues)) {
 			$updated = true;
+			$sequenceField = \App\Fields\RecordNumber::getInstance($moduleId);
 			foreach ($picklistValues as $picklistKey => $picklistSequence) {
-				$sequenceField = \App\Fields\RecordNumber::getInstance($moduleId);
-				$sequenceField->updateNumberSequence($picklistSequence, $picklistKey);
+				$sequenceField->updateModuleVariablesSequences($picklistSequence, ['value' => $picklistKey]);
 			}
 		}
 		$response = new Vtiger_Response();

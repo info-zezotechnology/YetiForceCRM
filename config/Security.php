@@ -7,7 +7,7 @@
  * @package Config
  *
  * @copyright YetiForce S.A.
- * @license   YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license   YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  */
 
 namespace Config;
@@ -170,7 +170,7 @@ class Security
 	public static $cspHeaderTokenTime = '5 minutes';
 
 	/** Allowed domains for loading images, used in CSP. */
-	public static $allowedImageDomains = [];
+	public static $allowedImageDomains = ['*.tile.openstreetmap.org'];
 
 	/**
 	 * Specifies valid parents that may embed a page using <frame>, <iframe>, <object>, <embed> or <applet> and validate referer.
@@ -184,10 +184,7 @@ class Security
 	/** Allowed domains which can be used as the target of a form submissions from a given context, used in CSP. */
 	public static $allowedFormDomains = ['https://www.paypal.com'];
 
-	/**
-	 * Allowed domains which can be loaded using script interfaces.
-	 * CSP: connect-src.
-	 */
+	/** Allowed domains which can be loaded using script interfaces. */
 	public static $allowedConnectDomains = [];
 
 	/** Generally allowed domains, used in CSP. */

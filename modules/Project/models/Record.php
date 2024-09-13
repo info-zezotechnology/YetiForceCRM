@@ -6,7 +6,7 @@
  * @package   Model
  *
  * @copyright YetiForce S.A.
- * @license   YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license   YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  * @author    Arkadiusz Dudek <a.dudek@yetiforce.com>
  */
 class Project_Record_Model extends Vtiger_Record_Model
@@ -27,7 +27,7 @@ class Project_Record_Model extends Vtiger_Record_Model
 				preg_match('/<a(.*)>(.*)<\\/a>/i', $info[0], $name);
 				$recordModel = Vtiger_Record_Model::getCleanInstance('Project');
 				$recordModel->setId($id);
-				$hierarchy['entries'][$id][0] = $dashes[0] . '<a href=' . $recordModel->getDetailViewUrl() . '>' . $name[2] . '</a>';
+				$hierarchy['entries'][$id][0] = ($dashes[0] ?? '') . '<a href=' . $recordModel->getDetailViewUrl() . '>' . $name[2] . '</a>';
 			}
 		}
 		return $hierarchy;

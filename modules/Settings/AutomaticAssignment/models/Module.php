@@ -4,7 +4,7 @@
  * Automatic assignment module model class.
  *
  * @copyright YetiForce S.A.
- * @license   YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license   YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  * @author    Radosław Skrzypczak <r.skrzypczak@yetiforce.com>
  */
 class Settings_AutomaticAssignment_Module_Model extends Settings_Vtiger_Module_Model
@@ -335,5 +335,11 @@ class Settings_AutomaticAssignment_Module_Model extends Settings_Vtiger_Module_M
 				break;
 		}
 		return \Vtiger_Field_Model::init($this->getName(true), $params, $name);
+	}
+
+	/** {@inheritDoc} */
+	public function hasCreatePermissions()
+	{
+		return \App\YetiForce\Shop::check('YetiForceAutoAssignment');
 	}
 }

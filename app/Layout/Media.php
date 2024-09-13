@@ -5,7 +5,7 @@
  * @package App
  *
  * @copyright YetiForce S.A.
- * @license   YetiForce Public License 5.0 (licenses/LicenseEN.txt or yetiforce.com)
+ * @license   YetiForce Public License 6.5 (licenses/LicenseEN.txt or yetiforce.com)
  * @author    Radosław Skrzypczak <r.skrzypczak@yetiforce.com>
  */
 
@@ -86,5 +86,27 @@ class Media
 		}
 
 		return $path;
+	}
+
+	/**
+	 * Get image HTML.
+	 *
+	 * @param string $value json
+	 *
+	 * @return string
+	 */
+	public static function getImageHtml(string $value): string
+	{
+		$icon = '';
+		if ($value && !\App\Json::isEmpty($value)) {
+			['type' => $type, 'name' => $name] = \App\Json::decode($value);
+			if ('icon' === $type) {
+				$icon = "<span class=\"{$name} mr-1\"></span>";
+			} elseif ('image' === $type && ($src = self::getImageUrl($name))) {
+				$icon = '<img class="icon-img--picklist mr-1" src="' . $src . '">';
+			}
+		}
+
+		return $icon;
 	}
 }

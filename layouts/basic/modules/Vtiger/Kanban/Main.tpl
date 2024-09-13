@@ -1,4 +1,4 @@
-{*<!-- {[The file is published on the basis of YetiForce Public License 5.0 that can be found in the following directory: licenses/LicenseEN.txt or yetiforce.com]} -->*}
+{*<!-- {[The file is published on the basis of YetiForce Public License 6.5 that can be found in the following directory: licenses/LicenseEN.txt or yetiforce.com]} -->*}
 {strip}
 	<!-- tpl-Base-Kanban-Main -->
 	<div class="o-breadcrumb widget_header row mb-1">
@@ -12,12 +12,12 @@
 		<div class="col-12 d-md-flex flex-sm-row my-1 px-0">
 			<div class="col-md-6 col-sm-12 px-0">
 				{include file=\App\Layout::getTemplatePath('ButtonViewLinks.tpl') LINKS=$QUICK_LINKS['SIDEBARLINK'] CLASS='buttonTextHolder c-btn-block-sm-down mb-md-0 mb-1'}
-				<button type="button"
-					class="btn btn-light modCT_{$MODULE_NAME} js-quick-create-modal js-popover-tooltip ml-md-1 ml-sm-0 mb-md-0 mb-1 c-btn-block-sm-down"
-					data-module="{$MODULE_NAME}">
-					<span class="fas fa-plus-square mr-2"></span>
-					{\App\Language::translate('LBL_ADD_RECORD')}
-				</button>
+				{if $MODULE_MODEL->isPermitted('CreateView')}
+					<a href="{if $MODULE_MODEL->isQuickCreateSupported()}#{else}{$MODULE_MODEL->getCreateRecordUrl()}{/if}"
+						data-module="{$MODULE_NAME}"
+						class="text-reset text-decoration-none btn btn-light {if $MODULE_MODEL->isQuickCreateSupported()} js-quick-create-modal {/if} ml-md-1"><span class="fas fa-plus mr-1"></span> {\App\Language::translate('LBL_ADD_RECORD')}
+					</a>
+				{/if}
 			</div>
 			<div class="d-flex justify-content-md-end justify-content-sm-start col-md-6 col-12 px-0 mt-sm-0 mt-1">
 				<div class="js-hide-filter col-lg-6 col-11 px-0">
@@ -51,17 +51,17 @@
 				</div>
 			</div>
 		</div>
-		<div class="c-kanban__tabdrop js-kanban-header" js-data="container">
+		<div class="c-kanban__tabdrop js-kanban-header" data-js="container">
 			<div class="js-hide-filter col-auto px-0 related">
 				<ul class="nav nav-pills js-tabdrop justify-content-start" data-js="tabdrop">
 					{foreach item=BOARD from=$BOARDS}
 						{assign var=BOARDS_FIELD_MODEL value=\Vtiger_Field_Model::getInstanceFromFieldId($BOARD['fieldid'])}
-						{assign var=ICON value=$BOARDS_FIELD_MODEL->getIcon('Kanban')}
+						{assign var=ICON value=$BOARDS_FIELD_MODEL->get('icon')}
 						<li class="c-tab--small c-tab--hover c-tab--gray nav-item d-none float-left {if $BOARD['fieldid'] == $ACTIVE_BOARD['fieldid']} active {/if} js-board-tab"
 							data-id="{$BOARD['fieldid']}">
 							<a role="button"
 								class="flCT_{$MODULE_NAME}_{$BOARDS_FIELD_MODEL->getFieldName()} px-4 nav-link u-text-ellipsis">
-								{if isset($ICON['name'])}<span class="{$ICON['name']} mr-2"></span>{/if}
+								{if $ICON}{\App\Layout\Media::getImageHtml($ICON)}{/if}
 								{$BOARDS_FIELD_MODEL->getFullLabelTranslation()}
 							</a>
 						</li>
@@ -85,16 +85,19 @@
 				<div class="alert alert-warning m-1">
 					<span class="yfi-premium mr-2 u-fs-2em color-red-600 float-left"></span>
 					{\App\Language::translate($CHECK_ALERT, 'Settings::YetiForce')}
-					<a class="btn btn-primary btn-sm ml-1"
-						href="index.php?parent=Settings&module=YetiForce&view=Shop&product=YetiForceKanban&mode=showProductModal">
-						<span class="yfi yfi-shop mr-2"></span>
-						{\App\Language::translate('LBL_YETIFORCE_SHOP', $QUALIFIED_MODULE)}
-					</a>
+					{if $USER_MODEL->isAdminUser()}
+						<a class="btn btn-primary btn-sm ml-1"
+							href="index.php?parent=Settings&module=YetiForce&view=Shop&product=YetiForceKanban&mode=showProductModal">
+							<span class="yfi yfi-shop mr-2"></span>
+							{\App\Language::translate('LBL_YETIFORCE_SHOP', $QUALIFIED_MODULE)}
+						</a>
+					{/if}
+				</div>
+			{else}
+				<div class="js-kanban-container pb-2 c-kanban__container" data-js="container">
+					{include file=\App\Layout::getTemplatePath('Kanban/Kanban.tpl', $MODULE_NAME)}
 				</div>
 			{/if}
-			<div class="js-kanban-container pb-2 c-kanban__container" js-data="container">
-				{include file=\App\Layout::getTemplatePath('Kanban/Kanban.tpl', $MODULE_NAME)}
-			</div>
 		{/if}
 	</div>
 	<!-- tpl-Base-Kanban-Main -->
